@@ -5,8 +5,8 @@ to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.
   <v-card :elevation="0">
     <v-card-title v-if="!isEmbedded"><%= entity.label || h.changeCase.pascal(entity.name) %>{{ isNew ? '追加' : '編集' }}</v-card-title>
     <v-card-text>
-      <v-layout v-if="syncedTarget" wrap>
-        <v-form ref="entryForm" class="full-width" lazy-validation>
+      <v-form v-if="syncedTarget" ref="entryForm" class="full-width" lazy-validation>
+        <v-layout wrap>
         <%_ entity.editProperties.forEach(function (property, key) { -%>
           <%_ if (property.type === 'string' && property.name === 'id') { -%>
           <v-flex md12 sm12 xs12>
@@ -211,8 +211,8 @@ to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.
           </v-flex>
           <%_ } -%>
         <%_ }) -%>
-        </v-form>
-      </v-layout>
+        </v-layout>
+      </v-form>
       <v-layout v-else>
         <v-spacer></v-spacer>
         <v-btn class="action-button" color="primary" dark fab small top @click="initializeTarget">
