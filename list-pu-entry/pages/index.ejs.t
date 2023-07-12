@@ -17,7 +17,6 @@ to: "<%= entity.enable ? `${rootDirectory}/${projectName}/pages/${entity.name}/i
     ></<%= h.changeCase.param(entity.name) %>-data-table>
     <v-dialog v-model="isEntryFormOpen" max-width="800px" persistent>
       <<%= h.changeCase.param(entity.name) %>-entry-form
-        :dialog="true"
         :is-new="editIndex === NEW_INDEX"
         :open.sync="isEntryFormOpen"
         :target.sync="editTarget"
