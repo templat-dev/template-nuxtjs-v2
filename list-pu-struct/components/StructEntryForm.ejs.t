@@ -5,8 +5,8 @@ to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.
   <v-card :elevation="0">
     <v-card-title v-if="!isEmbedded"><%= entity.label || h.changeCase.pascal(entity.name) %>{{ isNew ? '追加' : '編集' }}</v-card-title>
     <v-card-text>
-      <v-layout v-if="syncedTarget" wrap>
-        <v-form ref="entryForm" class="full-width" lazy-validation>
+      <v-form v-if="syncedTarget" ref="entryForm" class="full-width" lazy-validation>
+        <v-layout wrap>
         <%_ entity.editProperties.forEach(function (property, key) { -%>
           <%_ if (property.type === 'string' && property.name === 'id') { -%>
           <v-flex md12 sm12 xs12>
@@ -211,8 +211,8 @@ to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.
           </v-flex>
           <%_ } -%>
         <%_ }) -%>
-        </v-form>
-      </v-layout>
+        </v-layout>
+      </v-form>
       <v-layout v-else>
         <v-spacer></v-spacer>
         <v-btn class="action-button" color="primary" dark fab small top @click="initializeTarget">
@@ -225,7 +225,7 @@ to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.
       <v-spacer></v-spacer>
       <v-btn v-if="!isNew" color="red darken-1" text @click="remove">削除</v-btn>
       <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="validateForm">保存</v-btn>
+      <v-btn color="blue darken-1" text @click="save">保存</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -422,6 +422,10 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
   @Watch('syncedOpen')
   onOpen() {
     if (this.syncedOpen) {
+      const dialogElement = document.getElementsByClassName('v-dialog--active')?.[0]
+      if (dialogElement) {
+        dialogElement.scrollTop = 0
+      }
       (this.$refs.entryForm as VForm).resetValidation()<% if (structForms.length > 0) { %>;<% } %>
 <%_ structForms.forEach(function (name, index) { -%>
       ((this.$refs.<%= name %>Form as Vue)?.$refs.entryForm as VForm)?.resetValidation()<% if (structForms.length - 1 !== index) { %>;<% } %>
@@ -433,7 +437,7 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
     this.syncedTarget = INITIAL_<%= h.changeCase.constant(entity.name) %>
   }
 
-  validateForm() {
+  async save() {
 <%_ if (structForms.length === 0) { -%>
     if (!(this.$refs.entryForm as VForm).validate()) {
 <%_ } else { -%>
@@ -448,11 +452,6 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
       })
       return
     }
-    this.save()
-  }
-
-  @Emit('updated')
-  async save() {
   <%_ if (entity.screenType !== 'struct') { -%><%# Structでない場合 -%>
     if (this.hasParent) {
       // 親要素側で保存
@@ -473,12 +472,18 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
         })
       }
       this.close()
+      this.saved()
     } finally {
       vxm.app.hideLoading()
     }
   <%_ } else { -%>
     this.close()
+    this.saved()
   <%_ } -%>
+  }
+
+  @Emit('updated')
+  saved() {
   }
 
   @Emit('remove')
