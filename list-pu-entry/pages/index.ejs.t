@@ -134,17 +134,22 @@ export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixin
 
   async asyncData({}: Context) {
     const data = await <%= h.changeCase.pascal(entity.pluralName) %>.fetch()
-    const pageInfo = cloneDeep(INITIAL_DATA_TABLE_PAGE_INFO)
 <%_ if (entity.dbType === 'datastore') { -%>
+    const pageInfo = cloneDeep(INITIAL_DATA_TABLE_PAGE_INFO)
     if (data.cursor) {
       pageInfo.cursors[0] = data.cursor
     }
-<%_ } -%>
     return {
       <%= entity.pluralName %>: data.<%= entity.pluralName %>,
       totalCount: data.count,
       pageInfo
     }
+<%_ } else { -%>
+    return {
+      <%= entity.pluralName %>: data.<%= entity.pluralName %>,
+      totalCount: data.count
+    }
+<%_ } -%>
   }
 
   async reFetch() {
