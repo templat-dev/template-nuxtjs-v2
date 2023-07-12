@@ -422,6 +422,10 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
   @Watch('syncedOpen')
   onOpen() {
     if (this.syncedOpen) {
+      const dialogElement = document.getElementsByClassName('v-dialog--active')?.[0]
+      if (dialogElement) {
+        dialogElement.scrollTop = 0
+      }
       (this.$refs.entryForm as VForm).resetValidation()<% if (structForms.length > 0) { %>;<% } %>
 <%_ structForms.forEach(function (name, index) { -%>
       ((this.$refs.<%= name %>Form as Vue)?.$refs.entryForm as VForm)?.resetValidation()<% if (structForms.length - 1 !== index) { %>;<% } %>

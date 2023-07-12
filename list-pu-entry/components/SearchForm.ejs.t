@@ -251,6 +251,10 @@ export default class <%= h.changeCase.pascal(entity.name) %>SearchForm extends m
   @Watch('syncedOpen')
   initialize() {
     if (this.syncedOpen) {
+      const dialogElement = document.getElementsByClassName('v-dialog--active')?.[0]
+      if (dialogElement) {
+        dialogElement.scrollTop = 0
+      }
       this.searchCondition = cloneDeep(this.currentSearchCondition)
     }
   }
