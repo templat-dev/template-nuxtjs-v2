@@ -238,6 +238,7 @@ to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.
   <%_ } -%>
 <%_ }) -%>
 import {Component, Emit, mixins, Prop, PropSync, <% if (structForms.length > 0) { %>Vue, <% } %>Watch} from 'nuxt-property-decorator'
+import {cloneDeep} from 'lodash-es'
 import {vxm} from '@/store'
 import Base, {VForm} from '@/mixins/base'
 import {<%_ if (entity.screenType !== 'struct') { -%><%= h.changeCase.upperCaseFirst(entity.name) %>Api, <% } -%>Model<%= entity.pascalName %>} from '@/apis'
@@ -434,7 +435,7 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
   }
 
   initializeTarget() {
-    this.syncedTarget = INITIAL_<%= h.changeCase.constant(entity.name) %>
+    this.syncedTarget = cloneDeep(INITIAL_<%= h.changeCase.constant(entity.name) %>)
   }
 
   async save() {
