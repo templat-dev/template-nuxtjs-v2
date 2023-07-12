@@ -225,7 +225,7 @@ to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.
       <v-spacer></v-spacer>
       <v-btn v-if="!isNew" color="red darken-1" text @click="remove">削除</v-btn>
       <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="validateForm">保存</v-btn>
+      <v-btn color="blue darken-1" text @click="save">保存</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -433,7 +433,7 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
     this.syncedTarget = INITIAL_<%= h.changeCase.constant(entity.name) %>
   }
 
-  validateForm() {
+  async save() {
 <%_ if (structForms.length === 0) { -%>
     if (!(this.$refs.entryForm as VForm).validate()) {
 <%_ } else { -%>
@@ -448,11 +448,6 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
       })
       return
     }
-    this.save()
-  }
-
-  @Emit('updated')
-  async save() {
   <%_ if (entity.screenType !== 'struct') { -%><%# Structでない場合 -%>
     if (this.hasParent) {
       // 親要素側で保存
@@ -473,12 +468,18 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
         })
       }
       this.close()
+      this.saved()
     } finally {
       vxm.app.hideLoading()
     }
   <%_ } else { -%>
     this.close()
+    this.saved()
   <%_ } -%>
+  }
+
+  @Emit('updated')
+  saved() {
   }
 
   @Emit('remove')
