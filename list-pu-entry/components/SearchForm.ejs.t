@@ -110,23 +110,23 @@ import DateTimeForm from '@/components/form/DateTimeForm.vue'
 export interface <%= h.changeCase.pascal(entity.name) %>SearchCondition {
   <%_ searchConditions.forEach(function(property) { -%>
     <%_ if (property.type === 'string' && !property.range) { -%>
-  <%= property.name %>?: <%= property.type %>>
+  <%= property.name %>?: <%= property.type %>
     <%_ } -%>
     <%_ if (property.type === 'boolean' && !property.range) { -%>
-  <%= property.name %>?: <%= property.type %>>
+  <%= property.name %>?: <%= property.type %>
     <%_ } -%>
     <%_ if (property.type === 'number' && !property.range) { -%>
-  <%= property.name %>?: <%= property.type %>>
+  <%= property.name %>?: <%= property.type %>
     <%_ } -%>
     <%_ if (property.type === 'number' && property.range) { -%>
-  <%= property.name %>?: <%= property.type %>>
-  <%= property.name %>From?: <%= property.type %>>
-  <%= property.name %>To?: <%= property.type %>>
+  <%= property.name %>?: <%= property.type %>
+  <%= property.name %>From?: <%= property.type %>
+  <%= property.name %>To?: <%= property.type %>
     <%_ } -%>
     <%_ if (property.type === 'string' && property.range) { -%>
-  <%= property.name %>?: <%= property.type %>>
-  <%= property.name %>From?: <%= property.type %>>
-  <%= property.name %>To?: <%= property.type %>>
+  <%= property.name %>?: <%= property.type %>
+  <%= property.name %>From?: <%= property.type %>
+  <%= property.name %>To?: <%= property.type %>
     <%_ } -%>
   <%_ }) -%>
 }
