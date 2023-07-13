@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>EntryForm.vue
+to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>EntryForm.vue
 ---
 <template>
   <v-card :elevation="0">

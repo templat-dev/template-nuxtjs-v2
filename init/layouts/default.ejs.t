@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/layouts/default.vue
+to: <%= rootDirectory %>/layouts/default.vue
 force: true
 ---
 <template>
@@ -27,7 +27,7 @@ force: true
         <span>{{ currentPageTitle }}</span>
       </div>
       <v-spacer/>
-<%_ if (entity.plugins.includes('auth')) { -%>
+<%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
       <v-btn @click="signOut" icon v-if="!isLoginPage">
         <v-icon>mdi-logout-variant</v-icon>
       </v-btn>
@@ -52,7 +52,7 @@ force: true
 
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
-<%_ if (entity.plugins.includes('auth')) { -%>
+<%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
 import {auth} from '~/plugins/firebase'
 <%_ } -%>
 import AppLoading from '@/components/modal/AppLoading.vue'
@@ -86,7 +86,7 @@ export default class DefaultLayout extends Vue {
       // メニュー
     ]
   }
-<%_ if (entity.plugins.includes('auth')) { -%>
+<%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
 
   get isLoginPage() {
     return this.$route.path === '/login'

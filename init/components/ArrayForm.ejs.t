@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/components/form/ArrayForm.vue
+to: <%= rootDirectory %>/components/form/ArrayForm.vue
 force: true
 ---
 <template>

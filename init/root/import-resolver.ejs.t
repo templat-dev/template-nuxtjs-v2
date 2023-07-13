@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/import-resolver.js
+to: <%= rootDirectory %>/import-resolver.js
 force: true
 ---
 /* eslint-disable no-undef */

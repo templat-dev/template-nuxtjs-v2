@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/store/index.ts
+to: <%= rootDirectory %>/store/index.ts
 force: true
 ---
 import Vue from 'vue'

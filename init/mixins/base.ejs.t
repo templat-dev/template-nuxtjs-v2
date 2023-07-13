@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/mixins/base.ts
+to: <%= rootDirectory %>/mixins/base.ts
 ---
 import {Component, Vue} from 'nuxt-property-decorator'
 import {format, formatISO} from 'date-fns'

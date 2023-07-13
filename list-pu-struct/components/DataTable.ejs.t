@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>DataTable.vue
+to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>DataTable.vue
 ---
 <template>
   <v-flex>

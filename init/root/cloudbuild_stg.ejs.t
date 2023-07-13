@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/cloudbuild_stg.yaml
+to: <%= rootDirectory %>/cloudbuild_stg.yaml
 force: true
 ---
 steps:

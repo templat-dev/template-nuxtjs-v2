@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/store/app.ts
+to: <%= rootDirectory %>/store/app.ts
 force: true
 ---
 import {createModule, mutation} from 'vuex-class-component'

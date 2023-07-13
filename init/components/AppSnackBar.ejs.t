@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/components/modal/AppSnackBar.vue
+to: <%= rootDirectory %>/components/modal/AppSnackBar.vue
 force: true
 ---
 <template>

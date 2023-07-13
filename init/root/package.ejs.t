@@ -1,9 +1,9 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/package.json
+to: <%= rootDirectory %>/package.json
 force: true
 ---
 {
-  "name": "<%= projectName %>",
+  "name": "<%= project.name %>",
   "version": "1.0.0",
   "description": "<%= entity.label %>",
   "author": "TemPlat Console",
@@ -22,12 +22,12 @@ force: true
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
-<%_ if (entity.plugins.includes('pay')) { -%>
+<%_ if (project.plugins.find(p => p.name === 'pay')?.enable) { -%>
     "@stripe/stripe-js": "^1.17.1",
 <%_ } -%>
     "@nuxtjs/vuetify": "^1.12.1",
     "date-fns": "^2.21.1",
-<%_ if (entity.plugins.includes('auth')) { -%>
+<%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
     "firebase": "^8.10.0",
     "firebaseui": "^5.0.0",
 <%_ } -%>
@@ -40,7 +40,7 @@ force: true
     "@nuxt/types": "^2.15.7",
     "@nuxt/typescript-build": "^2.1.0",
     "@openapitools/openapi-generator-cli": "^1.0.18-5.0.0-beta2",
-<%_ if (entity.plugins.includes('pay')) { -%>
+<%_ if (project.plugins.find(p => p.name === 'pay')?.enable) { -%>
     "@types/lodash-es": "^4.17.4",
     "@types/stripe-v3": "^3.1.25"
 <%_ } else { -%>

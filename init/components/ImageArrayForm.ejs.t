@@ -1,5 +1,5 @@
 ---
-to: "<%= entity.plugins.includes('image') ? `${rootDirectory}/${projectName}/components/form/ImageArrayForm.vue` : null %>"
+to: "<%= project.plugins.find(p => p.name === 'image')?.enable ? `${rootDirectory}/${projectName}/components/form/ImageArrayForm.vue` : null %>"
 force: true
 ---
 <template>

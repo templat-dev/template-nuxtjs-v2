@@ -1,5 +1,5 @@
 ---
-to: "<%= entity.plugins.includes('auth') ? `${rootDirectory}/${projectName}/middleware/auth.ts` : null %>"
+to: "<%= project.plugins.find(p => p.name === 'auth')?.enable ? `${rootDirectory}/${projectName}/middleware/auth.ts` : null %>"
 force: true
 ---
 import {Context} from '@nuxt/types'

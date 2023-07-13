@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>SearchForm.vue
+to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>SearchForm.vue
 ---
 <template>
   <v-dialog v-model="syncedOpen" max-width="800px">

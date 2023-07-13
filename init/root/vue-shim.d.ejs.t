@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/vue-shim.d.ts
+to: <%= rootDirectory %>/vue-shim.d.ts
 force: true
 ---
 declare module '*.vue' {

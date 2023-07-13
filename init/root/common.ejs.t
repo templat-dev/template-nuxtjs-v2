@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/common.scss
+to: <%= rootDirectory %>/common.scss
 force: true
 ---
 // width/height

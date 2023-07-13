@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/variables.scss
+to: <%= rootDirectory %>/variables.scss
 force: true
 ---
 // assets/variables.scss

@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/layouts/default.vue
+to: <%= rootDirectory %>/layouts/default.vue
 inject: true
 skip_if: // メニュー <%= entity.name %>
 after: // メニュー

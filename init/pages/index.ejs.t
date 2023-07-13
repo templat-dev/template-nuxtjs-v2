@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/pages/index.vue
+to: <%= rootDirectory %>/pages/index.vue
 force: true
 ---
 <template>
@@ -14,7 +14,7 @@ force: true
 import {Component, mixins} from 'nuxt-property-decorator'
 import Base from '@/mixins/base'
 
-@Component<%_ if (entity.plugins.includes('auth')) { -%>({middleware: 'auth'})<%_ } %>
+@Component<%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>({middleware: 'auth'})<%_ } %>
 export default class TopPage extends mixins(Base) {
 }
 </script>

@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/tsconfig.json
+to: <%= rootDirectory %>/tsconfig.json
 force: true
 ---
 {
@@ -32,7 +32,7 @@ force: true
       "@nuxtjs/axios",
       "@types/node",
       "@nuxtjs/vuetify",
-<%_ if (entity.plugins.includes('pay')) { -%>
+<%_ if (project.plugins.find(p => p.name === 'pay')?.enable) { -%>
       "stripe-v3"
 <%_ } -%>
     ],

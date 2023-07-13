@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/swagger.sh
+to: <%= rootDirectory %>/swagger.sh
 force: true
 ---
 #!/usr/bin/env bash

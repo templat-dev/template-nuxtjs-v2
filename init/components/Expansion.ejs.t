@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/components/form/Expansion.vue
+to: <%= rootDirectory %>/components/form/Expansion.vue
 force: true
 ---
 <template>

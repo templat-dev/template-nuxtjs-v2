@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/components/modal/AppDialog.vue
+to: <%= rootDirectory %>/components/modal/AppDialog.vue
 force: true
 ---
 <template>

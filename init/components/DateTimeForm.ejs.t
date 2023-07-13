@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/components/form/DateTimeForm.vue
+to: <%= rootDirectory %>/components/form/DateTimeForm.vue
 force: true
 ---
 <template>

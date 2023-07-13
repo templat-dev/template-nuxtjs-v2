@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/nuxt.config.ts
+to: <%= rootDirectory %>/nuxt.config.ts
 force: true
 ---
 import { Configuration } from "@nuxt/types"
@@ -47,7 +47,7 @@ const config: Configuration = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-<%_ if (entity.plugins.includes('auth')) { -%>
+<%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
     '@/plugins/auth',
     '@/plugins/firebase',
 <%_ } -%>

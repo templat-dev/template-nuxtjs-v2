@@ -67,7 +67,7 @@ import <%= h.changeCase.pascal(entity.name) %>EntryForm, {INITIAL_<%= h.changeCa
     <%= h.changeCase.pascal(entity.name) %>DataTable,
     <%= h.changeCase.pascal(entity.name) %>EntryForm
   },
-<%_ if (entity.plugins.includes('auth')) { -%>
+<%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
   middleware: 'auth'
 <%_ } -%>
 })
@@ -122,7 +122,7 @@ export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixin
       <%_ } -%>
     <%_ }) -%>
       limit: pageInfo.itemsPerPage !== -1 ? pageInfo.itemsPerPage : undefined,
-<%_ if (entity.dbType === 'datastore') { -%>
+<%_ if (project.dbType === 'datastore') { -%>
       cursor: pageInfo.page !== 1 ? pageInfo.cursors[pageInfo.page - 2] : undefined,
       orderBy: pageInfo.sortBy.map((sb, i) => `${(pageInfo.sortDesc)[i] ? '-' : ''}${sb}`).join(',') || undefined
 <%_ } else { -%>
@@ -134,7 +134,7 @@ export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixin
 
   async asyncData({}: Context) {
     const data = await <%= h.changeCase.pascal(entity.pluralName) %>.fetch()
-<%_ if (entity.dbType === 'datastore') { -%>
+<%_ if (project.dbType === 'datastore') { -%>
     const pageInfo = cloneDeep(INITIAL_DATA_TABLE_PAGE_INFO)
     if (data.cursor) {
       pageInfo.cursors[0] = data.cursor
@@ -159,7 +159,7 @@ export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixin
         searchCondition: this.searchCondition,
         pageInfo: this.pageInfo
       })
-<%_ if (entity.dbType === 'datastore') { -%>
+<%_ if (project.dbType === 'datastore') { -%>
       if (data.cursor) {
         this.pageInfo.cursors[this.pageInfo.page - 1] = data.cursor
       }

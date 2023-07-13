@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/<%= projectName %>/layouts/error.vue
+to: <%= rootDirectory %>/layouts/error.vue
 force: true
 ---
 <template>
