@@ -180,10 +180,10 @@ export default class <%= h.changeCase.pascal(entity.name) %>DataTable extends mi
   get previewSearchCondition() {
     const previewSearchConditions = []
     for (const [key, value] of Object.entries(this.syncedSearchCondition)) {
-      if (!value.enabled) {
+      if (!value) {
         continue
       }
-      previewSearchConditions.push(`${key}=${value.value}`)
+      previewSearchConditions.push(`${key}=${value}`)
     }
     return previewSearchConditions.join(', ')
   }

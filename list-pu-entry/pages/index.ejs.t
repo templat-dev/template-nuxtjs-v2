@@ -105,20 +105,20 @@ export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixin
     <%_ entity.listProperties.listExtraProperties.forEach(function(property, index){ -%>
 <%#_ 通常の検索 -%>
       <%_ if ((property.type === 'string' || property.type === 'time' || property.type === 'bool' || property.type === 'number')  && property.searchType === 1) { -%>
-      <%= property.name %>: searchCondition.<%= property.name %>.enabled ? searchCondition.<%= property.name %>.value : undefined,
+      <%= property.name %>: searchCondition.<%= property.name %> || undefined,
 <%#_ 配列の検索 -%>
       <%_ } else if ((property.type === 'array-string' || property.type === 'array-time' || property.type === 'array-bool' || property.type === 'array-number')  && property.searchType === 1) { -%>
-      <%= property.name %>: searchCondition.<%= property.name %>.enabled ? [searchCondition.<%= property.name %>.value] : undefined,
+      <%= property.name %>: searchCondition.<%= property.name %> ? [searchCondition.<%= property.name %>] : undefined,
 <%#_ 範囲検索 -%>
       <%_ } else if ((property.type === 'time' || property.type === 'number') && 2 <= property.searchType &&  property.searchType <= 5) { -%>
-      <%= property.name %>: searchCondition.<%= property.name %>.enabled ? searchCondition.<%= property.name %>.value : undefined,
-      <%= property.name %>From: searchCondition.<%= property.name %>From.enabled ? searchCondition.<%= property.name %>From.value : undefined,
-      <%= property.name %>To: searchCondition.<%= property.name %>To.enabled ? searchCondition.<%= property.name %>To.value : undefined,
+      <%= property.name %>: searchCondition.<%= property.name %> || undefined,
+      <%= property.name %>From: searchCondition.<%= property.name %>From || undefined,
+      <%= property.name %>To: searchCondition.<%= property.name %>To || undefined,
 <%#_ 配列の範囲検索 -%>
       <%_ } else if ((property.type === 'array-time' || property.type === 'array-number') && 2 <= property.searchType &&  property.searchType <= 5) { -%>
-      <%= property.name %>: searchCondition.<%= property.name %>.enabled ? [searchCondition.<%= property.name %>.value] : undefined,
-      <%= property.name %>From: searchCondition.<%= property.name %>From.enabled ? searchCondition.<%= property.name %>From.value : undefined,
-      <%= property.name %>To: searchCondition.<%= property.name %>To.enabled ? searchCondition.<%= property.name %>To.value : undefined,
+      <%= property.name %>: searchCondition.<%= property.name %> ? [searchCondition.<%= property.name %>] : undefined,
+      <%= property.name %>From: searchCondition.<%= property.name %>From || undefined,
+      <%= property.name %>To: searchCondition.<%= property.name %>To || undefined,
       <%_ } -%>
     <%_ }) -%>
       limit: pageInfo.itemsPerPage !== -1 ? pageInfo.itemsPerPage : undefined,

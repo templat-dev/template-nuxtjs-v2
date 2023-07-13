@@ -6,124 +6,62 @@ to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.
     <v-card :elevation="0">
       <v-card-title><%= h.changeCase.pascal(entity.name) %>検索</v-card-title>
       <v-card-text>
+        <v-layout column>
       <%_ if (entity.listProperties.listExtraProperties) { -%>
       <%_ entity.listProperties.listExtraProperties.forEach(function (property, key) { -%>
         <%_ if ((property.type === 'string' || property.type === 'array-string' || property.type === 'textarea' || property.type === 'array-textarea') && property.searchType === 1) { -%>
-        <v-layout>
-          <v-flex sm1 xs2>
-            <v-switch v-model="searchCondition.<%= property.name %>.enabled"/>
-          </v-flex>
-          <v-flex sm11 xs10>
-            <v-text-field
-              v-model="searchCondition.<%= property.name %>.value"
-              :disabled="!searchCondition.<%= property.name %>.enabled"
-              label="<%= property.screenLabel ? property.screenLabel : property.name %>"
-            ></v-text-field>
-          </v-flex>
-        </v-layout>
+          <v-text-field
+            v-model="searchCondition.<%= property.name %>"
+            label="<%= property.screenLabel ? property.screenLabel : property.name %>"
+          ></v-text-field>
         <%_ } -%>
         <%_ if ((property.type === 'number' || property.type === 'array-number') && property.searchType !== 0) { -%>
-        <v-layout>
-          <v-flex sm1 xs2>
-            <v-switch v-model="searchCondition.<%= property.name %>.enabled"/>
-          </v-flex>
-          <v-flex sm11 xs10>
-            <v-text-field
-              :disabled="!searchCondition.<%= property.name %>.enabled"
-              :value="searchCondition.<%= property.name %>.value"
-              label="<%= property.screenLabel ? property.screenLabel : property.name %>"
-              type="number"
-              @input="v => searchCondition.<%= property.name %>.value = v === '' ? undefined : Number(v)"
-            ></v-text-field>
-          </v-flex>
-        </v-layout>
+          <v-text-field
+            :value="searchCondition.<%= property.name %>"
+            label="<%= property.screenLabel ? property.screenLabel : property.name %>"
+            type="number"
+            @input="v => searchCondition.<%= property.name %> = v === '' ? undefined : Number(v)"
+          ></v-text-field>
         <%_ } -%>
         <%_ if ((property.type === 'number' || property.type === 'array-number') && 2 <= property.searchType && property.searchType <= 5) { -%>
-        <v-layout>
-          <v-flex sm1 xs2>
-            <v-switch v-model="searchCondition.<%= property.name %>From.enabled"/>
-          </v-flex>
-          <v-flex sm11 xs10>
-            <v-text-field
-              :disabled="!searchCondition.<%= property.name %>From.enabled"
-              :value="searchCondition.<%= property.name %>From.value"
-              label="<%= property.screenLabel ? property.screenLabel : property.name %>開始"
-              type="number"
-              @input="v => searchCondition.<%= property.name %>From.value = v === '' ? undefined : Number(v)"
-            ></v-text-field>
-          </v-flex>
-        </v-layout>
-        <v-layout>
-          <v-flex sm1 xs2>
-            <v-switch v-model="searchCondition.<%= property.name %>To.enabled"/>
-          </v-flex>
-          <v-flex sm11 xs10>
-            <v-text-field
-              :disabled="!searchCondition.<%= property.name %>To.enabled"
-              :value="searchCondition.<%= property.name %>To.value"
-              label="<%= property.screenLabel ? property.screenLabel : property.name %>終了"
-              type="number"
-              @input="v => searchCondition.<%= property.name %>To.value = v === '' ? undefined : Number(v)"
-            ></v-text-field>
-          </v-flex>
-        </v-layout>
+          <v-text-field
+            :value="searchCondition.<%= property.name %>From"
+            label="<%= property.screenLabel ? property.screenLabel : property.name %>開始"
+            type="number"
+            @input="v => searchCondition.<%= property.name %>From = v === '' ? undefined : Number(v)"
+          ></v-text-field>
+          <v-text-field
+            :value="searchCondition.<%= property.name %>To"
+            label="<%= property.screenLabel ? property.screenLabel : property.name %>終了"
+            type="number"
+            @input="v => searchCondition.<%= property.name %>To = v === '' ? undefined : Number(v)"
+          ></v-text-field>
         <%_ } -%>
         <%_ if ((property.type === 'time' || property.type === 'array-time') && property.searchType !== 0) { -%>
-        <v-layout>
-          <v-flex sm1 xs2>
-            <v-switch v-model="searchCondition.<%= property.name %>.enabled"/>
-          </v-flex>
-          <v-flex sm11 xs10>
-            <date-time-form
-              :date-time.sync="searchCondition.<%= property.name %>.value"
-              :disabled="!searchCondition.<%= property.name %>.enabled"
-              label="<%= property.screenLabel ? property.screenLabel : property.name %>"
-            ></date-time-form>
-          </v-flex>
-        </v-layout>
+          <date-time-form
+            :date-time.sync="searchCondition.<%= property.name %>"
+            label="<%= property.screenLabel ? property.screenLabel : property.name %>"
+          ></date-time-form>
         <%_ } -%>
         <%_ if ((property.type === 'time' || property.type === 'array-time') && 2 <= property.searchType &&  property.searchType <= 5) { -%>
-        <v-layout>
-          <v-flex sm1 xs2>
-            <v-switch v-model="searchCondition.<%= property.name %>From.enabled"/>
-          </v-flex>
-          <v-flex sm11 xs10>
-            <date-time-form
-              :date-time.sync="searchCondition.<%= property.name %>From.value"
-              :disabled="!searchCondition.<%= property.name %>From.enabled"
-              label="<%= property.screenLabel ? property.screenLabel : property.name %>開始"
-            ></date-time-form>
-          </v-flex>
-        </v-layout>
-        <v-layout>
-          <v-flex sm1 xs2>
-            <v-switch v-model="searchCondition.<%= property.name %>To.enabled"/>
-          </v-flex>
-          <v-flex sm11 xs10>
-            <date-time-form
-              :date-time.sync="searchCondition.<%= property.name %>To.value"
-              :disabled="!searchCondition.<%= property.name %>To.enabled"
-              label="<%= property.screenLabel ? property.screenLabel : property.name %>終了"
-            ></date-time-form>
-          </v-flex>
-        </v-layout>
+          <date-time-form
+            :date-time.sync="searchCondition.<%= property.name %>From"
+            label="<%= property.screenLabel ? property.screenLabel : property.name %>開始"
+          ></date-time-form>
+          <date-time-form
+            :date-time.sync="searchCondition.<%= property.name %>To"
+            label="<%= property.screenLabel ? property.screenLabel : property.name %>終了"
+          ></date-time-form>
         <%_ } -%>
         <%_ if ((property.type === 'bool' || property.type === 'array-bool') && property.searchType === 1) { -%>
-        <v-layout>
-          <v-flex sm1 xs2>
-            <v-switch v-model="searchCondition.<%= property.name %>.enabled"/>
-          </v-flex>
-          <v-flex sm11 xs10>
-            <v-checkbox
-              v-model="searchCondition.<%= property.name %>.value"
-              :disabled="!searchCondition.<%= property.name %>.enabled"
-              label="<%= property.screenLabel ? property.screenLabel : property.name %>"
-            ></v-checkbox>
-          </v-flex>
-        </v-layout>
+          <v-checkbox
+            v-model="searchCondition.<%= property.name %>"
+            label="<%= property.screenLabel ? property.screenLabel : property.name %>"
+          ></v-checkbox>
         <%_ } -%>
       <%_ }) -%>
       <%_ } -%>
+        </v-layout>
       </v-card-text>
       <v-card-actions>
         <v-btn color="grey darken-1" text @click="close">キャンセル</v-btn>
@@ -163,36 +101,32 @@ to: <%= rootDirectory %>/<%= projectName %>/components/<%= entity.name %>/<%= h.
 <%_ } -%>
 import {Component, Emit, mixins, Prop, PropSync, Watch} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
-<%_ if (searchConditions.length > 0) { -%>
-import Base, {BaseSearchCondition, SingleSearchCondition} from '@/mixins/base'
-<%_ } else { -%>
 import Base from '@/mixins/base'
-<%_ } -%>
 <%_ if (importDateTime) { -%>
 import DateTimeForm from '@/components/form/DateTimeForm.vue'
 <%_ } -%>
 
 <%_ if (searchConditions.length > 0) { -%>
-export interface <%= h.changeCase.pascal(entity.name) %>SearchCondition extends BaseSearchCondition {
+export interface <%= h.changeCase.pascal(entity.name) %>SearchCondition {
   <%_ searchConditions.forEach(function(property) { -%>
     <%_ if (property.type === 'string' && !property.range) { -%>
-  <%= property.name %>: SingleSearchCondition<<%= property.type %>>
+  <%= property.name %>?: <%= property.type %>>
     <%_ } -%>
     <%_ if (property.type === 'boolean' && !property.range) { -%>
-  <%= property.name %>: SingleSearchCondition<<%= property.type %>>
+  <%= property.name %>?: <%= property.type %>>
     <%_ } -%>
     <%_ if (property.type === 'number' && !property.range) { -%>
-  <%= property.name %>: SingleSearchCondition<<%= property.type %>>
+  <%= property.name %>?: <%= property.type %>>
     <%_ } -%>
     <%_ if (property.type === 'number' && property.range) { -%>
-  <%= property.name %>: SingleSearchCondition<<%= property.type %>>
-  <%= property.name %>From: SingleSearchCondition<<%= property.type %>>
-  <%= property.name %>To: SingleSearchCondition<<%= property.type %>>
+  <%= property.name %>?: <%= property.type %>>
+  <%= property.name %>From?: <%= property.type %>>
+  <%= property.name %>To?: <%= property.type %>>
     <%_ } -%>
     <%_ if (property.type === 'string' && property.range) { -%>
-  <%= property.name %>: SingleSearchCondition<<%= property.type %>>
-  <%= property.name %>From: SingleSearchCondition<<%= property.type %>>
-  <%= property.name %>To: SingleSearchCondition<<%= property.type %>>
+  <%= property.name %>?: <%= property.type %>>
+  <%= property.name %>From?: <%= property.type %>>
+  <%= property.name %>To?: <%= property.type %>>
     <%_ } -%>
   <%_ }) -%>
 }
@@ -200,23 +134,23 @@ export interface <%= h.changeCase.pascal(entity.name) %>SearchCondition extends 
 export const INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION: <%= h.changeCase.pascal(entity.name) %>SearchCondition = {
   <%_ searchConditions.forEach(function(property) { -%>
     <%_ if (property.type === 'string' && !property.range) { -%>
-  <%= property.name %>: {enabled: false, value: ''},
+  <%= property.name %>: undefined,
     <%_ } -%>
     <%_ if (property.type === 'boolean' && !property.range) { -%>
-  <%= property.name %>: {enabled: false, value: false},
+  <%= property.name %>: undefined,
     <%_ } -%>
     <%_ if (property.type === 'number' && !property.range) { -%>
-  <%= property.name %>: {enabled: false, value: 0},
+  <%= property.name %>: undefined,
     <%_ } -%>
     <%_ if (property.type === 'number' && property.range) { -%>
-  <%= property.name %>: {enabled: false, value: 0},
-  <%= property.name %>From: {enabled: false, value: 0},
-  <%= property.name %>To: {enabled: false, value: 0},
+  <%= property.name %>: undefined,
+  <%= property.name %>From: undefined,
+  <%= property.name %>To: undefined,
     <%_ } -%>
     <%_ if (property.type === 'string' && property.range) { -%>
-  <%= property.name %>: {enabled: false, value: ''},
-  <%= property.name %>From: {enabled: false, value: ''},
-  <%= property.name %>To: {enabled: false, value: ''},
+  <%= property.name %>: undefined,
+  <%= property.name %>From: undefined,
+  <%= property.name %>To: undefined,
     <%_ } -%>
   <%_ }) -%>
 }

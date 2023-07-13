@@ -13,15 +13,6 @@ export interface VForm extends HTMLFormElement {
   validate(): boolean
 }
 
-export interface SingleSearchCondition<T> {
-  enabled: boolean
-  value: T
-}
-
-export interface BaseSearchCondition {
-  [key: string]: SingleSearchCondition<string | number | boolean>
-}
-
 @Component
 export default class Base extends Vue {
   readonly NEW_INDEX = -1
