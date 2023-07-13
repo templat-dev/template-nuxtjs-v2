@@ -249,10 +249,10 @@ import DateTimeForm from '@/components/form/DateTimeForm.vue'
       <%_ importDateTime = true -%>
   <%_ } -%>
 <%_ }) -%>
-<%_ if (entity.hasImage === true) { -%>
+<%_ if (struct.exists.edit.image) { -%>
 import ImageForm from '@/components/form/ImageForm.vue'
 <%_ } -%>
-<%_ if (entity.hasMultiImage === true) { -%>
+<%_ if (struct.exists.edit.arrayImage) { -%>
 import ImageArrayForm from '@/components/form/ImageArrayForm.vue'
 <%_ } -%>
 <%_ const importArrayStructSet = new Set() -%>
@@ -322,10 +322,10 @@ export const INITIAL_<%= struct.name.upperSnakeName %>: Model<%= struct.name.pas
 
 @Component({
   components: {
-<%_ if (entity.hasImage === true) { -%>
+<%_ if (struct.exists.edit.image) { -%>
     ImageForm,
 <%_ } -%>
-<%_ if (entity.hasMultiImage === true) { -%>
+<%_ if (struct.exists.edit.arrayImage) { -%>
     ImageArrayForm,
 <%_ } -%>
 <%_ let componentsDateTime = false -%>
