@@ -18,7 +18,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
       <template #top>
         <v-toolbar color="white" flat>
           <v-toolbar-title><%= struct.screenLabel %>一覧</v-toolbar-title>
-<%_ if (entity.screenType !== 'struct') { -%>
+<%_ if (struct.structType !== 'struct') { -%>
           <template v-if="!hasParent">
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-btn icon @click="isSearchFormOpen = true">
@@ -92,7 +92,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
         </v-btn>
       </template>
     </app-data-table>
-<%_ if (entity.screenType !== 'struct') { -%>
+<%_ if (struct.structType !== 'struct') { -%>
     <<%= struct.name.lowerSnakeName %>-search-form
       :current-search-condition="syncedSearchCondition"
       :open.sync="isSearchFormOpen"
@@ -108,14 +108,14 @@ import {cloneDeep} from 'lodash-es'
 import Base from '@/mixins/base'
 import {Model<%= struct.name.pascalName %>} from '@/apis'
 import AppDataTable, {DataTablePageInfo, INITIAL_DATA_TABLE_PAGE_INFO} from '@/components/common/AppDataTable.vue'
-<%_ if (entity.screenType !== 'struct') { -%>
+<%_ if (struct.structType !== 'struct') { -%>
 import <%= struct.name.pascalName %>SearchForm, {
   <%= struct.name.pascalName %>SearchCondition,
   INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION
 } from '@/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
 <%_ } -%>
 
-<%_ if (entity.screenType !== 'struct') { -%>
+<%_ if (struct.structType !== 'struct') { -%>
 @Component({
   components: {
     AppDataTable,
@@ -164,7 +164,7 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
   /** 一覧の読み込み状態 */
   @Prop({type: Boolean, default: false})
   isLoading!: boolean
-<%_ if (entity.screenType !== 'struct') { -%>
+<%_ if (struct.structType !== 'struct') { -%>
 
   /** 検索フォームの表示表示状態 (true: 表示, false: 非表示) */
   isSearchFormOpen: boolean = false
@@ -192,7 +192,7 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
   @Emit('onChangePageInfo')
   onChangePageInfo() {
   }
-<%_ if (entity.screenType !== 'struct') { -%>
+<%_ if (struct.structType !== 'struct') { -%>
 
   @Emit('onChangeSearch')
   onChangeSearch() {

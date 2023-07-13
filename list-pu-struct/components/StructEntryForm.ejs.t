@@ -241,7 +241,7 @@ import {Component, Emit, mixins, Prop, PropSync, <% if (structForms.length > 0) 
 import {cloneDeep} from 'lodash-es'
 import {vxm} from '@/store'
 import Base, {VForm} from '@/mixins/base'
-import {<%_ if (entity.screenType !== 'struct') { -%><%= struct.name.pascalName %>Api, <% } -%>Model<%= struct.name.pascalName %>} from '@/apis'
+import {<%_ if (struct.structType !== 'struct') { -%><%= struct.name.pascalName %>Api, <% } -%>Model<%= struct.name.pascalName %>} from '@/apis'
 <%_ let importDateTime = false -%>
 <%_ entity.editProperties.forEach(function (property, key) { -%>
   <%_ if ((property.type === 'time' || property.type === 'array-time') && !importDateTime) { -%>
@@ -453,7 +453,7 @@ export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base)
       })
       return
     }
-  <%_ if (entity.screenType !== 'struct') { -%><%# Structでない場合 -%>
+  <%_ if (struct.structType !== 'struct') { -%><%# Structでない場合 -%>
     if (this.hasParent) {
       // 親要素側で保存
       return
