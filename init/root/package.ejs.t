@@ -3,9 +3,9 @@ to: <%= rootDirectory %>/package.json
 force: true
 ---
 {
-  "name": "<%= project.name %>",
+  "name": "<%= project.projectName %>",
   "version": "1.0.0",
-  "description": "<%= entity.label %>",
+  "description": "<%= project.projectName %>",
   "author": "TemPlat Console",
   "private": true,
   "scripts": {

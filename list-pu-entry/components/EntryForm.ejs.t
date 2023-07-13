@@ -3,7 +3,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
 ---
 <template>
   <v-card :elevation="0">
-    <v-card-title v-if="!isEmbedded"><%= entity.label || struct.name.pascalName %>{{ isNew ? '追加' : '編集' }}</v-card-title>
+    <v-card-title v-if="!isEmbedded"><%= struct.screenLabel || struct.name.pascalName %>{{ isNew ? '追加' : '編集' }}</v-card-title>
     <v-card-text>
       <v-form v-if="syncedTarget" ref="entryForm" class="full-width" lazy-validation>
         <v-layout wrap>

@@ -21,7 +21,7 @@ force: true
     <v-app-bar :clipped-left="true" app color="primary" dark dense fixed>
       <v-app-bar-nav-icon @click="drawer = !drawer"/>
       <nuxt-link class="no-decoration-link" to="/">
-        <v-toolbar-title><%= entity.label %></v-toolbar-title>
+        <v-toolbar-title><%= project.projectName %></v-toolbar-title>
       </nuxt-link>
       <div v-if="currentPageTitle" class="page-name-area">
         <span>{{ currentPageTitle }}</span>
