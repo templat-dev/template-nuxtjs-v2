@@ -1,9 +1,9 @@
 ---
-to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>EntryForm.vue
+to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>EntryForm.vue
 ---
 <template>
   <v-card :elevation="0">
-    <v-card-title v-if="!isEmbedded"><%= entity.label || h.changeCase.pascal(entity.name) %>{{ isNew ? '追加' : '編集' }}</v-card-title>
+    <v-card-title v-if="!isEmbedded"><%= entity.label || struct.name.pascalName %>{{ isNew ? '追加' : '編集' }}</v-card-title>
     <v-card-text>
       <v-form v-if="syncedTarget" ref="entryForm" class="full-width" lazy-validation>
         <v-layout wrap>
@@ -82,7 +82,7 @@ to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(e
             <image-form
               :image-url.sync="syncedTarget.<%= property.name %>"
               :rules="validationRules.<%= property.name %>"
-              dir="<%= entity.name %>/<%= property.name %>"
+              dir="<%= struct.name.lowerCamelName %>/<%= property.name %>"
               label="<%= property.screenLabel ? property.screenLabel : property.name %>"
             ></image-form>
           </v-flex>
@@ -92,7 +92,7 @@ to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(e
             <image-array-form
               :image-urls.sync="syncedTarget.<%= property.name %>"
               :rules="validationRules.<%= property.name %>"
-              dir="<%= entity.name %>/<%= property.name %>"
+              dir="<%= struct.name.lowerCamelName %>/<%= property.name %>"
               label="<%= property.screenLabel ? property.screenLabel : property.name %>"
             ></image-array-form>
           </v-flex>
@@ -173,18 +173,18 @@ to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(e
           <v-flex xs12>
             <expansion label="<%= property.screenLabel ? property.screenLabel : property.name %>一覧">
               <struct-array-form
-                :initial="initial<%= h.changeCase.pascal(property.structType) %>"
+                :initial="initial<%= property.structName.pascalName %>"
                 :items.sync="syncedTarget.<%= property.name %>">
                 <template v-slot:table="{items, openEntryForm, removeRow}">
-                  <<%= h.changeCase.param(property.structType) %>-data-table
+                  <<%= property.structName.lowerSnakeName %>-data-table
                     :has-parent="true"
                     :items="items"
                     @openEntryForm="openEntryForm"
                     @remove="removeRow"
-                  ></<%= h.changeCase.param(property.structType) %>-data-table>
+                  ></<%= property.structName.lowerSnakeName %>-data-table>
                 </template>
                 <template v-slot:form="{editIndex, isEntryFormOpen, editTarget, closeForm, removeForm, updatedForm}">
-                  <<%= h.changeCase.param(property.structType) %>-entry-form
+                  <<%= property.structName.lowerSnakeName %>-entry-form
                     :has-parent="true"
                     :is-new="editIndex === NEW_INDEX"
                     :open="isEntryFormOpen"
@@ -192,7 +192,7 @@ to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(e
                     @close="closeForm"
                     @remove="removeForm"
                     @updated="updatedForm"
-                  ></<%= h.changeCase.param(property.structType) %>-entry-form>
+                  ></<%= property.structName.lowerSnakeName %>-entry-form>
                 </template>
               </struct-array-form>
             </expansion>
@@ -201,12 +201,12 @@ to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(e
           <%_ if (property.type === 'struct') { -%>
           <v-flex xs12>
             <expansion expanded label="<%= property.screenLabel ? property.screenLabel : property.name %>">
-              <<%= h.changeCase.param(property.structType) %>-entry-form
+              <<%= property.structName.lowerSnakeName %>-entry-form
                 ref="<%= property.name %>Form"
                 :has-parent="true"
                 :is-embedded="true"
                 :target.sync="syncedTarget.<%= property.name %>"
-              ></<%= h.changeCase.param(property.structType) %>-entry-form>
+              ></<%= property.structName.lowerSnakeName %>-entry-form>
             </expansion>
           </v-flex>
           <%_ } -%>
@@ -241,7 +241,7 @@ import {Component, Emit, mixins, Prop, PropSync, <% if (structForms.length > 0) 
 import {cloneDeep} from 'lodash-es'
 import {vxm} from '@/store'
 import Base, {VForm} from '@/mixins/base'
-import {<%_ if (entity.screenType !== 'struct') { -%><%= h.changeCase.upperCaseFirst(entity.name) %>Api, <% } -%>Model<%= entity.pascalName %>} from '@/apis'
+import {<%_ if (entity.screenType !== 'struct') { -%><%= struct.name.pascalName %>Api, <% } -%>Model<%= struct.name.pascalName %>} from '@/apis'
 <%_ let importDateTime = false -%>
 <%_ entity.editProperties.forEach(function (property, key) { -%>
   <%_ if ((property.type === 'time' || property.type === 'array-time') && !importDateTime) { -%>
@@ -271,8 +271,8 @@ import Expansion from '@/components/form/Expansion.vue'
       <%_ importExpansion = true -%>
     <%_ } -%>
     <%_ if (!importArrayStructSet.has(property.structType)) { -%>
-import <%= h.changeCase.pascal(property.structType) %>EntryForm, {INITIAL_<%= h.changeCase.constant(property.structType) %>} from '@/components/<%= h.changeCase.camel(property.structType) %>/<%= h.changeCase.pascal(property.structType) %>EntryForm.vue'
-import <%= h.changeCase.pascal(property.structType) %>DataTable from '@/components/<%= h.changeCase.camel(property.structType) %>/<%= h.changeCase.pascal(property.structType) %>DataTable.vue'
+import <%= property.structName.pascalName %>EntryForm, {INITIAL_<%= property.structName.upperSnakeName %>} from '@/components/<%= property.structName.lowerCamelName %>/<%= property.structName.pascalName %>EntryForm.vue'
+import <%= property.structName.pascalName %>DataTable from '@/components/<%= property.structName.lowerCamelName %>/<%= property.structName.pascalName %>DataTable.vue'
       <%_ importArrayStructSet.add(property.structType) -%>
     <%_ } -%>
   <%_ } -%>
@@ -284,7 +284,7 @@ import Expansion from '@/components/form/Expansion.vue'
       <%_ importExpansion = true -%>
     <%_ } -%>
     <%_ if (!importArrayStructSet.has(property.structType) && !importStructSet.has(property.structType)) { -%>
-import <%= h.changeCase.pascal(property.structType) %>EntryForm, {INITIAL_<%= h.changeCase.constant(property.structType) %>} from '@/components/<%= h.changeCase.camel(property.structType) %>/<%= h.changeCase.pascal(property.structType) %>EntryForm.vue'
+import <%= property.structName.pascalName %>EntryForm, {INITIAL_<%= property.structName.upperSnakeName %>} from '@/components/<%= property.structName.lowerCamelName %>/<%= property.structName.pascalName %>EntryForm.vue'
       <%_ importStructSet.add(property.structType) -%>
     <%_ } -%>
   <%_ } -%>
@@ -300,10 +300,10 @@ import ArrayForm from '@/components/form/ArrayForm.vue'
   <%_ } -%>
 <%_ }) -%>
 
-export const INITIAL_<%= h.changeCase.constant(entity.name) %>: Model<%= entity.pascalName %> = {
+export const INITIAL_<%= struct.name.upperSnakeName %>: Model<%= struct.name.pascalName %> = {
 <%_ entity.editProperties.forEach(function (property, key) { -%>
   <%_ if (property.type === 'struct') { -%>
-  <%= property.name %>: INITIAL_<%= h.changeCase.constant(property.structType) %>,
+  <%= property.name %>: INITIAL_<%= property.structName.upperSnakeName %>,
   <%_ } -%>
   <%_ if (property.type.startsWith('array')) { -%>
   <%= property.name %>: [],
@@ -347,7 +347,7 @@ export const INITIAL_<%= h.changeCase.constant(entity.name) %>: Model<%= entity.
       <%_ componentsExpansion = true -%>
     <%_ } -%>
     <%_ if (!componentsStructFormSet.has(property.structType)) { -%>
-    <%= h.changeCase.pascal(property.structType) %>EntryForm,
+    <%= property.structName.pascalName %>EntryForm,
       <%_ componentsStructFormSet.add(property.structType) -%>
     <%_ } -%>
   <%_ } -%>
@@ -361,11 +361,11 @@ export const INITIAL_<%= h.changeCase.constant(entity.name) %>: Model<%= entity.
       <%_ componentsStructArrayForm = true -%>
     <%_ } -%>
     <%_ if (!componentsStructTableSet.has(property.structType)) { -%>
-    <%= h.changeCase.pascal(property.structType) %>DataTable,
+    <%= property.structName.pascalName %>DataTable,
       <%_ componentsStructTableSet.add(property.structType) -%>
     <%_ } -%>
     <%_ if (!componentsStructFormSet.has(property.structType)) { -%>
-    <%= h.changeCase.pascal(property.structType) %>EntryForm,
+    <%= property.structName.pascalName %>EntryForm,
       <%_ componentsStructFormSet.add(property.structType) -%>
     <%_ } -%>
   <%_ } -%>
@@ -382,14 +382,14 @@ export const INITIAL_<%= h.changeCase.constant(entity.name) %>: Model<%= entity.
 <%_ }) -%>
   }
 })
-export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mixins(Base) {
+export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base) {
   /** 表示状態 (true: 表示, false: 非表示) */
   @PropSync('open', {type: Boolean, default: true})
   syncedOpen!: boolean
 
   /** 編集対象 */
   @PropSync('target', {type: Object})
-  syncedTarget!: Model<%= entity.pascalName %>
+  syncedTarget!: Model<%= struct.name.pascalName %>
 
   /** 表示方式 (true: 埋め込み, false: ダイアログ) */
   @Prop({type: Boolean, default: false})
@@ -405,8 +405,8 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
 <%_ entity.editProperties.forEach(function (property, key) { -%>
   <%_ if (property.type === 'array-struct') { -%>
 
-  /** <%= h.changeCase.pascal(property.structType) %>の初期値 */
-  initial<%= h.changeCase.pascal(property.structType) %> = INITIAL_<%= h.changeCase.constant(property.structType) %>
+  /** <%= property.structName.pascalName %>の初期値 */
+  initial<%= property.structName.pascalName %> = INITIAL_<%= property.structName.upperSnakeName %>
   <%_ } -%>
 <%_ }) -%>
 
@@ -435,7 +435,7 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
   }
 
   initializeTarget() {
-    this.syncedTarget = cloneDeep(INITIAL_<%= h.changeCase.constant(entity.name) %>)
+    this.syncedTarget = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>)
   }
 
   async save() {
@@ -462,12 +462,12 @@ export default class <%= h.changeCase.pascal(entity.name) %>EntryForm extends mi
     try {
       if (this.isNew) {
         // 新規の場合
-        await new <%= h.changeCase.upperCaseFirst(entity.name) %>Api().create<%= entity.pascalName %>({
+        await new <%= struct.name.pascalName %>Api().create<%= struct.name.pascalName %>({
           body: this.syncedTarget
         })
       } else {
         // 更新の場合
-        await new <%= h.changeCase.upperCaseFirst(entity.name) %>Api().update<%= entity.pascalName %>({
+        await new <%= struct.name.pascalName %>Api().update<%= struct.name.pascalName %>({
           id: this.syncedTarget.id!,
           body: this.syncedTarget
         })

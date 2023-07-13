@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>DataTable.vue
+to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>DataTable.vue
 ---
 <template>
   <v-flex>
@@ -93,11 +93,11 @@ to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(e
       </template>
     </app-data-table>
 <%_ if (entity.screenType !== 'struct') { -%>
-    <<%= h.changeCase.param(entity.name) %>-search-form
+    <<%= struct.name.lowerSnakeName %>-search-form
       :current-search-condition="syncedSearchCondition"
       :open.sync="isSearchFormOpen"
       @search="search"
-    ></<%= h.changeCase.param(entity.name) %>-search-form>
+    ></<%= struct.name.lowerSnakeName %>-search-form>
 <%_ } -%>
   </v-flex>
 </template>
@@ -106,20 +106,20 @@ to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(e
 import {Component, Emit, mixins, Prop, PropSync} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
 import Base from '@/mixins/base'
-import {Model<%= entity.pascalName %>} from '@/apis'
+import {Model<%= struct.name.pascalName %>} from '@/apis'
 import AppDataTable, {DataTablePageInfo, INITIAL_DATA_TABLE_PAGE_INFO} from '@/components/common/AppDataTable.vue'
 <%_ if (entity.screenType !== 'struct') { -%>
-import <%= h.changeCase.pascal(entity.name) %>SearchForm, {
-  <%= h.changeCase.pascal(entity.name) %>SearchCondition,
-  INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION
-} from '@/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>SearchForm.vue'
+import <%= struct.name.pascalName %>SearchForm, {
+  <%= struct.name.pascalName %>SearchCondition,
+  INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION
+} from '@/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
 <%_ } -%>
 
 <%_ if (entity.screenType !== 'struct') { -%>
 @Component({
   components: {
     AppDataTable,
-    <%= h.changeCase.pascal(entity.name) %>SearchForm
+    <%= struct.name.pascalName %>SearchForm
   }
 })
 <%_ } else { -%>
@@ -127,7 +127,7 @@ import <%= h.changeCase.pascal(entity.name) %>SearchForm, {
   components: {AppDataTable}
 })
 <%_ } -%>
-export default class <%= h.changeCase.pascal(entity.name) %>DataTable extends mixins(Base) {
+export default class <%= struct.name.pascalName %>DataTable extends mixins(Base) {
   /** ヘッダー定義 */
   headers = [
     <%_ if (entity.listProperties.listExtraProperties) { -%>
@@ -151,7 +151,7 @@ export default class <%= h.changeCase.pascal(entity.name) %>DataTable extends mi
 
   /** 一覧表示用の配列 */
   @Prop({type: Array})
-  items!: Model<%= entity.pascalName %>[]
+  items!: Model<%= struct.name.pascalName %>[]
 
   /** 一覧の表示ページ情報 */
   @PropSync('pageInfo', {type: Object, default: () => cloneDeep(INITIAL_DATA_TABLE_PAGE_INFO)})
@@ -170,8 +170,8 @@ export default class <%= h.changeCase.pascal(entity.name) %>DataTable extends mi
   isSearchFormOpen: boolean = false
 
   /** 検索条件 */
-  @PropSync('searchCondition', {type: Object, default: () => cloneDeep(INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION)})
-  syncedSearchCondition!: <%= h.changeCase.pascal(entity.name) %>SearchCondition
+  @PropSync('searchCondition', {type: Object, default: () => cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION)})
+  syncedSearchCondition!: <%= struct.name.pascalName %>SearchCondition
 
   /** 表示方式 (true: 子要素として表示, false: 親要素として表示) */
   @Prop({type: Boolean, default: false})
@@ -198,19 +198,19 @@ export default class <%= h.changeCase.pascal(entity.name) %>DataTable extends mi
   onChangeSearch() {
   }
 
-  search(searchCondition: <%= h.changeCase.pascal(entity.name) %>SearchCondition) {
+  search(searchCondition: <%= struct.name.pascalName %>SearchCondition) {
     this.syncedSearchCondition = searchCondition
     this.onChangeSearch()
   }
 <%_ } -%>
 
   @Emit('openEntryForm')
-  openEntryForm(item?: Model<%= entity.pascalName %>) {
+  openEntryForm(item?: Model<%= struct.name.pascalName %>) {
     return item
   }
 
   @Emit('remove')
-  remove(item: Model<%= entity.pascalName %>) {
+  remove(item: Model<%= struct.name.pascalName %>) {
     return item
   }
 }

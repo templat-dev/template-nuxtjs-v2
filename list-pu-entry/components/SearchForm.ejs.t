@@ -1,10 +1,10 @@
 ---
-to: <%= rootDirectory %>/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>SearchForm.vue
+to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue
 ---
 <template>
   <v-dialog v-model="syncedOpen" max-width="800px">
     <v-card :elevation="0">
-      <v-card-title><%= h.changeCase.pascal(entity.name) %>検索</v-card-title>
+      <v-card-title><%= struct.name.pascalName %>検索</v-card-title>
       <v-card-text>
         <v-layout column>
       <%_ if (entity.listProperties.listExtraProperties) { -%>
@@ -107,7 +107,7 @@ import DateTimeForm from '@/components/form/DateTimeForm.vue'
 <%_ } -%>
 
 <%_ if (searchConditions.length > 0) { -%>
-export interface <%= h.changeCase.pascal(entity.name) %>SearchCondition {
+export interface <%= struct.name.pascalName %>SearchCondition {
   <%_ searchConditions.forEach(function(property) { -%>
     <%_ if (property.type === 'string' && !property.range) { -%>
   <%= property.name %>?: <%= property.type %>
@@ -131,7 +131,7 @@ export interface <%= h.changeCase.pascal(entity.name) %>SearchCondition {
   <%_ }) -%>
 }
 
-export const INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION: <%= h.changeCase.pascal(entity.name) %>SearchCondition = {
+export const INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION: <%= struct.name.pascalName %>SearchCondition = {
   <%_ searchConditions.forEach(function(property) { -%>
     <%_ if (property.type === 'string' && !property.range) { -%>
   <%= property.name %>: undefined,
@@ -155,10 +155,10 @@ export const INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION:
   <%_ }) -%>
 }
 <%_ } else { -%>
-export interface <%= h.changeCase.pascal(entity.name) %>SearchCondition {
+export interface <%= struct.name.pascalName %>SearchCondition {
 }
 
-export const INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION: <%= h.changeCase.pascal(entity.name) %>SearchCondition = {}
+export const INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION: <%= struct.name.pascalName %>SearchCondition = {}
 <%_ } -%>
 
 <%_ if (importDateTime) { -%>
@@ -170,17 +170,17 @@ export const INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION:
 <%_ } else { -%>
 @Component
 <%_ } -%>
-export default class <%= h.changeCase.pascal(entity.name) %>SearchForm extends mixins(Base) {
+export default class <%= struct.name.pascalName %>SearchForm extends mixins(Base) {
   /** 表示状態 (true: 表示, false: 非表示) */
   @PropSync('open', {type: Boolean, required: true})
   syncedOpen!: boolean
 
   /** 検索条件 */
   @Prop({type: Object, required: true})
-  currentSearchCondition!: <%= h.changeCase.pascal(entity.name) %>SearchCondition
+  currentSearchCondition!: <%= struct.name.pascalName %>SearchCondition
 
   /** 変更対象の検索条件 */
-  searchCondition: <%= h.changeCase.pascal(entity.name) %>SearchCondition = cloneDeep(INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION)
+  searchCondition: <%= struct.name.pascalName %>SearchCondition = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION)
 
   @Watch('syncedOpen')
   initialize() {
@@ -194,7 +194,7 @@ export default class <%= h.changeCase.pascal(entity.name) %>SearchForm extends m
   }
 
   clear() {
-    this.searchCondition = cloneDeep(INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION)
+    this.searchCondition = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION)
     this.search()
   }
 

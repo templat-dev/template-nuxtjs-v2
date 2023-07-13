@@ -1,11 +1,11 @@
 ---
-to: "<%= entity.enable ? `${rootDirectory}/${projectName}/pages/${entity.name}/index.vue` : null %>"
+to: "<%= entity.enable ? `${rootDirectory}/${projectName}/pages/${struct.name.lowerCamelName}/index.vue` : null %>"
 ---
 <template>
   <v-layout>
-    <<%= h.changeCase.param(entity.name) %>-data-table
+    <<%= struct.name.lowerSnakeName %>-data-table
       :is-loading="isLoading"
-      :items="<%= entity.pluralName %>"
+      :items="<%= struct.name.lowerCamelPluralName %>"
       :page-info.sync="pageInfo"
       :search-condition.sync="searchCondition"
       :total-count="totalCount"
@@ -14,15 +14,15 @@ to: "<%= entity.enable ? `${rootDirectory}/${projectName}/pages/${entity.name}/i
       @onChangeSearch="reFetch"
       @openEntryForm="openEntryForm"
       @remove="removeRow"
-    ></<%= h.changeCase.param(entity.name) %>-data-table>
+    ></<%= struct.name.lowerSnakeName %>-data-table>
     <v-dialog v-model="isEntryFormOpen" max-width="800px" persistent>
-      <<%= h.changeCase.param(entity.name) %>-entry-form
+      <<%= struct.name.lowerSnakeName %>-entry-form
         :is-new="editIndex === NEW_INDEX"
         :open.sync="isEntryFormOpen"
         :target.sync="editTarget"
         @remove="removeForm"
         @updated="reFetch"
-      ></<%= h.changeCase.param(entity.name) %>-entry-form>
+      ></<%= struct.name.lowerSnakeName %>-entry-form>
     </v-dialog>
   </v-layout>
 </template>
@@ -53,27 +53,27 @@ import {cloneDeep} from 'lodash-es'
 import {Context} from '@nuxt/types'
 import {vxm} from '@/store'
 import Base from '@/mixins/base'
-import {<%= h.changeCase.upperCaseFirst(entity.name) %>Api, Model<%= h.changeCase.pascal(entity.pluralName) %>, Model<%= entity.pascalName %>} from '@/apis'
+import {<%= struct.name.pascalName %>Api, Model<%= struct.name.pascalPluralName %>, Model<%= struct.name.pascalName %>} from '@/apis'
 import {DataTablePageInfo, INITIAL_DATA_TABLE_PAGE_INFO} from '@/components/common/AppDataTable.vue'
-import <%= h.changeCase.pascal(entity.name) %>DataTable from '@/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>DataTable.vue'
+import <%= struct.name.pascalName %>DataTable from '@/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>DataTable.vue'
 import {
-  <%= h.changeCase.pascal(entity.name) %>SearchCondition,
-  INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION
-} from '@/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>SearchForm.vue'
-import <%= h.changeCase.pascal(entity.name) %>EntryForm, {INITIAL_<%= h.changeCase.constant(entity.name) %>} from '@/components/<%= entity.name %>/<%= h.changeCase.pascal(entity.name) %>EntryForm.vue'
+  <%= struct.name.pascalName %>SearchCondition,
+  INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION
+} from '@/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
+import <%= struct.name.pascalName %>EntryForm, {INITIAL_<%= struct.name.upperSnakeName %>} from '@/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>EntryForm.vue'
 
 @Component({
   components: {
-    <%= h.changeCase.pascal(entity.name) %>DataTable,
-    <%= h.changeCase.pascal(entity.name) %>EntryForm
+    <%= struct.name.pascalName %>DataTable,
+    <%= struct.name.pascalName %>EntryForm
   },
 <%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
   middleware: 'auth'
 <%_ } -%>
 })
-export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixins(Base) {
+export default class <%= struct.name.pascalPluralName %> extends mixins(Base) {
   /** 一覧表示用の配列 */
-  <%= entity.pluralName %>: Model<%= entity.pascalName %>[] = []
+  <%= struct.name.lowerCamelPluralName %>: Model<%= struct.name.pascalName %>[] = []
 
   /** 一覧の表示ページ情報 */
   pageInfo = cloneDeep(INITIAL_DATA_TABLE_PAGE_INFO)
@@ -85,23 +85,23 @@ export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixin
   isLoading: boolean = false
 
   /** 検索条件 */
-  searchCondition: <%= h.changeCase.pascal(entity.name) %>SearchCondition = cloneDeep(INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION)
+  searchCondition: <%= struct.name.pascalName %>SearchCondition = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION)
 
   /** 入力フォームの表示表示状態 (true: 表示, false: 非表示) */
   isEntryFormOpen: boolean = false
 
   /** 編集対象 */
-  editTarget: Model<%= entity.pascalName %> | null = null
+  editTarget: Model<%= struct.name.pascalName %> | null = null
 
   /** 編集対象のインデックス */
   editIndex: number = 0
 
   static async fetch(
-    {searchCondition = INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION, pageInfo = INITIAL_DATA_TABLE_PAGE_INFO}
-      : { searchCondition: <%= h.changeCase.pascal(entity.name) %>SearchCondition, pageInfo: DataTablePageInfo }
-      = {searchCondition: INITIAL_<%= h.changeCase.constant(entity.name) %>_SEARCH_CONDITION, pageInfo: INITIAL_DATA_TABLE_PAGE_INFO}
-  ): Promise<Model<%= h.changeCase.upperCaseFirst(entity.pluralName) %>> {
-    return await new <%= h.changeCase.upperCaseFirst(entity.name) %>Api().search<%= entity.pascalName %>({
+    {searchCondition = INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION, pageInfo = INITIAL_DATA_TABLE_PAGE_INFO}
+      : { searchCondition: <%= struct.name.pascalName %>SearchCondition, pageInfo: DataTablePageInfo }
+      = {searchCondition: INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION, pageInfo: INITIAL_DATA_TABLE_PAGE_INFO}
+  ): Promise<Model<%= struct.name.pascalPluralName %>> {
+    return await new <%= struct.name.pascalName %>Api().search<%= struct.name.pascalName %>({
     <%_ entity.listProperties.listExtraProperties.forEach(function(property, index){ -%>
 <%#_ 通常の検索 -%>
       <%_ if ((property.type === 'string' || property.type === 'time' || property.type === 'bool' || property.type === 'number')  && property.searchType === 1) { -%>
@@ -133,20 +133,20 @@ export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixin
   }
 
   async asyncData({}: Context) {
-    const data = await <%= h.changeCase.pascal(entity.pluralName) %>.fetch()
+    const data = await <%= struct.name.pascalPluralName %>.fetch()
 <%_ if (project.dbType === 'datastore') { -%>
     const pageInfo = cloneDeep(INITIAL_DATA_TABLE_PAGE_INFO)
     if (data.cursor) {
       pageInfo.cursors[0] = data.cursor
     }
     return {
-      <%= entity.pluralName %>: data.<%= entity.pluralName %>,
+      <%= struct.name.lowerCamelPluralName %>: data.<%= struct.name.lowerCamelPluralName %>,
       totalCount: data.count,
       pageInfo
     }
 <%_ } else { -%>
     return {
-      <%= entity.pluralName %>: data.<%= entity.pluralName %>,
+      <%= struct.name.lowerCamelPluralName %>: data.<%= struct.name.lowerCamelPluralName %>,
       totalCount: data.count
     }
 <%_ } -%>
@@ -155,7 +155,7 @@ export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixin
   async reFetch() {
     this.isLoading = true
     try {
-      const data = await <%= h.changeCase.pascal(entity.pluralName) %>.fetch({
+      const data = await <%= struct.name.pascalPluralName %>.fetch({
         searchCondition: this.searchCondition,
         pageInfo: this.pageInfo
       })
@@ -164,26 +164,26 @@ export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixin
         this.pageInfo.cursors[this.pageInfo.page - 1] = data.cursor
       }
 <%_ } -%>
-      this.<%= entity.pluralName %> = data.<%= entity.pluralName %> || []
+      this.<%= struct.name.lowerCamelPluralName %> = data.<%= struct.name.lowerCamelPluralName %> || []
       this.totalCount = data.count || 0
     } finally {
       this.isLoading = false
     }
   }
 
-  openEntryForm(<%= entity.name %>?: Model<%= entity.pascalName %>) {
-    if (!!<%= entity.name %>) {
-      this.editTarget = cloneDeep(<%= entity.name %>)
-      this.editIndex = this.<%= entity.pluralName %>.indexOf(<%= entity.name %>)
+  openEntryForm(<%= struct.name.lowerCamelName %>?: Model<%= struct.name.pascalName %>) {
+    if (!!<%= struct.name.lowerCamelName %>) {
+      this.editTarget = cloneDeep(<%= struct.name.lowerCamelName %>)
+      this.editIndex = this.<%= struct.name.lowerCamelPluralName %>.indexOf(<%= struct.name.lowerCamelName %>)
     } else {
-      this.editTarget = cloneDeep(INITIAL_<%= h.changeCase.constant(entity.name) %>)
+      this.editTarget = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>)
       this.editIndex = this.NEW_INDEX
     }
     this.isEntryFormOpen = true
   }
 
-  removeRow(item: Model<%= entity.pascalName %>) {
-    const index = this.<%= entity.pluralName %>.indexOf(item)
+  removeRow(item: Model<%= struct.name.pascalName %>) {
+    const index = this.<%= struct.name.lowerCamelPluralName %>.indexOf(item)
     this.remove(index)
   }
 
@@ -199,7 +199,7 @@ export default class <%= h.changeCase.pascal(entity.pluralName) %> extends mixin
       positive: async () => {
         vxm.app.showLoading()
         try {
-          await new <%= h.changeCase.upperCaseFirst(entity.name) %>Api().delete<%= entity.pascalName %>({id: this.<%= entity.pluralName %>[index].id!})
+          await new <%= struct.name.pascalName %>Api().delete<%= struct.name.pascalName %>({id: this.<%= struct.name.lowerCamelPluralName %>[index].id!})
           this.isEntryFormOpen = false
           await this.reFetch()
         } finally {
