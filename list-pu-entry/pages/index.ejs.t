@@ -1,5 +1,5 @@
 ---
-to: "<%= entity.enable ? `${rootDirectory}/${projectName}/pages/${struct.name.lowerCamelName}/index.vue` : null %>"
+to: "<%= struct.generateEnable ? `${rootDirectory}/${projectName}/pages/${struct.name.lowerCamelName}/index.vue` : null %>"
 ---
 <template>
   <v-layout>
