@@ -1,5 +1,5 @@
 ---
-to: "<%= project.plugins.find(p => p.name === 'image')?.enable ? `${rootDirectory}/${projectName}/components/form/ImageStructArrayForm.vue` : null %>"
+to: "<%= project.plugins.find(p => p.name === 'image')?.enable ? `${rootDirectory}/components/form/ImageStructArrayForm.vue` : null %>"
 force: true
 ---
 <template>

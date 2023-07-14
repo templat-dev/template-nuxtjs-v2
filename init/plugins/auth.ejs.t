@@ -1,5 +1,5 @@
 ---
-to: "<%= project.plugins.find(p => p.name === 'auth')?.enable ? `${rootDirectory}/${projectName}/plugins/auth.ts` : null %>"
+to: "<%= project.plugins.find(p => p.name === 'auth')?.enable ? `${rootDirectory}/plugins/auth.ts` : null %>"
 force: true
 ---
 import {Context} from '@nuxt/types'

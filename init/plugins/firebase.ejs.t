@@ -1,5 +1,5 @@
 ---
-to: "<%= project.plugins.find(p => p.name === 'auth')?.enable ? `${rootDirectory}/${projectName}/plugins/firebase.ts` : null %>"
+to: "<%= project.plugins.find(p => p.name === 'auth')?.enable ? `${rootDirectory}/plugins/firebase.ts` : null %>"
 force: true
 ---
 import firebase from 'firebase/app'
