@@ -33,37 +33,37 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
           </v-btn>
         </v-toolbar>
       </template>
-<%_ if (entity.listProperties.listExtraProperties) { -%>
-<%_ entity.listProperties.listExtraProperties.forEach(function(property, index){ -%>
-<%_ if (property.type === 'time' || property.type === 'time-range') { -%>
-      <template #item.<%= property.name %>="{ item }">
-        <span>{{ formatDate(item.<%= property.name %>) }}</span>
+<%_ if (struct.fields) { -%>
+<%_ struct.fields.forEach(function(field, index){ -%>
+<%_ if (field.listType === 'time' || field.listType === 'time-range') { -%>
+      <template #item.<%= field.name.lowerCamelName %>="{ item }">
+        <span>{{ formatDate(item.<%= field.name.lowerCamelName %>) }}</span>
       </template>
 <%_ } -%>
-<%_ if (property.type === 'bool') { -%>
-      <template #item.<%= property.name %>="{ item }">
-        <v-checkbox v-model="item.<%= property.name %>" :ripple="false" class="ma-0 pa-0" hide-details readonly></v-checkbox>
+<%_ if (field.listType === 'bool') { -%>
+      <template #item.<%= field.name.lowerCamelName %>="{ item }">
+        <v-checkbox v-model="item.<%= field.name.lowerCamelName %>" :ripple="false" class="ma-0 pa-0" hide-details readonly></v-checkbox>
       </template>
 <%_ } -%>
-<%_ if (property.type === 'array-string' || property.type === 'array-number' || property.type === 'array-bool') { -%>
-      <template #item.<%= property.name %>="{ item }">
-        <span>{{ toStringArray(item.<%= property.name %>) }}</span>
+<%_ if (field.listType === 'array-string' || field.listType === 'array-number' || field.listType === 'array-bool') { -%>
+      <template #item.<%= field.name.lowerCamelName %>="{ item }">
+        <span>{{ toStringArray(item.<%= field.name.lowerCamelName %>) }}</span>
       </template>
 <%_ } -%>
-<%_ if (property.type === 'array-time') { -%>
-      <template #item.<%= property.name %>="{ item }">
-        <span>{{ toStringTimeArray(item.<%= property.name %>) }}</span>
+<%_ if (field.listType === 'array-time') { -%>
+      <template #item.<%= field.name.lowerCamelName %>="{ item }">
+        <span>{{ toStringTimeArray(item.<%= field.name.lowerCamelName %>) }}</span>
       </template>
 <%_ } -%>
-<%_ if (property.type === 'image' && property.dataType === 'string') { -%>
-      <template #item.<%= property.name %>="{ item }">
-        <v-img :src="item.<%= property.name %>" max-height="100px" max-width="100px"></v-img>
+<%_ if (field.listType === 'image' && field.dataType === 'string') { -%>
+      <template #item.<%= field.name.lowerCamelName %>="{ item }">
+        <v-img :src="item.<%= field.name.lowerCamelName %>" max-height="100px" max-width="100px"></v-img>
       </template>
 <%_ } -%>
-<%_ if (property.type === 'array-image') { -%>
-      <template #item.<%= property.name %>="{ item }">
+<%_ if (field.listType === 'array-image') { -%>
+      <template #item.<%= field.name.lowerCamelName %>="{ item }">
         <v-carousel
-          v-if="item.<%= property.name %> && item.<%= property.name %>.length > 0"
+          v-if="item.<%= field.name.lowerCamelName %> && item.<%= field.name.lowerCamelName %>.length > 0"
           class="carousel" height="100px" hide-delimiters>
           <template #prev="{ on, attrs }">
             <v-btn v-bind="attrs" v-on="on" icon x-small>
@@ -75,7 +75,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
           </template>
-          <v-carousel-item v-for="(image,i) in item.<%= property.name %>" :key="i">
+          <v-carousel-item v-for="(image,i) in item.<%= field.name.lowerCamelName %>" :key="i">
             <v-layout justify-center>
               <v-img :src="image" contain max-height="100px" max-width="100px"/>
             </v-layout>
@@ -130,13 +130,13 @@ import <%= struct.name.pascalName %>SearchForm, {
 export default class <%= struct.name.pascalName %>DataTable extends mixins(Base) {
   /** ヘッダー定義 */
   headers = [
-    <%_ if (entity.listProperties.listExtraProperties) { -%>
-    <%_ entity.listProperties.listExtraProperties.forEach(function(property, index){ -%>
-      <%_ if (property.type !== 'none' && property.dataType !== 'struct' && property.dataType !== 'array-struct') { -%>
+    <%_ if (struct.fields) { -%>
+    <%_ struct.fields.forEach(function(field, index){ -%>
+      <%_ if (field.listType !== 'none' && field.dataType !== 'struct' && field.dataType !== 'array-struct') { -%>
     {
-      text: '<%= property.screenLabel ? property.screenLabel : property.name === 'id' ? 'ID' : property.name %>',
-      align: '<%= property.align %>',
-      value: '<%= property.name %>'
+      text: '<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName === 'id' ? 'ID' : field.name.lowerCamelName %>',
+      align: '',
+      value: '<%= field.name.lowerCamelName %>'
     },
     <%_ } -%>
     <%_ }); -%>

@@ -28,26 +28,6 @@ to: "<%= struct.generateEnable ? `${rootDirectory}/${projectName}/pages/${struct
 </template>
 
 <script lang="ts">
-<%_ const searchConditions = [] -%>
-<%_ if (entity.listProperties.listExtraProperties && entity.listProperties.listExtraProperties.length > 0) { -%>
-<%_ entity.listProperties.listExtraProperties.forEach(function (property, key) { -%>
-  <%_ if ((property.type === 'string' || property.type === 'array-string' || property.type === 'time' || property.type === 'array-time') && property.searchType === 1) { -%>
-    <%_ searchConditions.push({name: property.name, type: 'string', range: false}) -%>
-  <%_ } -%>
-  <%_ if ((property.type === 'bool' || property.type === 'array-bool') && property.searchType === 1) { -%>
-    <%_ searchConditions.push({name: property.name, type: 'boolean', range: false}) -%>
-  <%_ } -%>
-  <%_ if ((property.type === 'number' || property.type === 'array-number') && property.searchType === 1) { -%>
-    <%_ searchConditions.push({name: property.name, type: 'number', range: false}) -%>
-  <%_ } -%>
-  <%_ if ((property.type === 'number' || property.type === 'array-number') && 2 <= property.searchType &&  property.searchType <= 5) { -%>
-    <%_ searchConditions.push({name: property.name, type: 'number', range: true}) -%>
-  <%_ } -%>
-  <%_ if ((property.type === 'time' || property.type === 'array-time') && 2 <= property.searchType &&  property.searchType <= 5) { -%>
-    <%_ searchConditions.push({name: property.name, type: 'string', range: true}) -%>
-  <%_ } -%>
-<%_ }) -%>
-<%_ } -%>
 import {Component, mixins} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
 import {Context} from '@nuxt/types'
@@ -102,23 +82,23 @@ export default class <%= struct.name.pascalPluralName %> extends mixins(Base) {
       = {searchCondition: INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION, pageInfo: INITIAL_DATA_TABLE_PAGE_INFO}
   ): Promise<Model<%= struct.name.pascalPluralName %>> {
     return await new <%= struct.name.pascalName %>Api().search<%= struct.name.pascalName %>({
-    <%_ entity.listProperties.listExtraProperties.forEach(function(property, index){ -%>
+    <%_ struct.fields.forEach(function(field, index){ -%>
 <%#_ 通常の検索 -%>
-      <%_ if ((property.type === 'string' || property.type === 'time' || property.type === 'bool' || property.type === 'number')  && property.searchType === 1) { -%>
-      <%= property.name %>: searchCondition.<%= property.name %> || undefined,
+      <%_ if ((field.listType === 'string' || field.listType === 'time' || field.listType === 'bool' || field.listType === 'number')  && field.searchType === 1) { -%>
+      <%= field.name.lowerCamelName %>: searchCondition.<%= field.name.lowerCamelName %> || undefined,
 <%#_ 配列の検索 -%>
-      <%_ } else if ((property.type === 'array-string' || property.type === 'array-time' || property.type === 'array-bool' || property.type === 'array-number')  && property.searchType === 1) { -%>
-      <%= property.name %>: searchCondition.<%= property.name %> ? [searchCondition.<%= property.name %>] : undefined,
+      <%_ } else if ((field.listType === 'array-string' || field.listType === 'array-time' || field.listType === 'array-bool' || field.listType === 'array-number')  && field.searchType === 1) { -%>
+      <%= field.name.lowerCamelName %>: searchCondition.<%= field.name.lowerCamelName %> ? [searchCondition.<%= field.name.lowerCamelName %>] : undefined,
 <%#_ 範囲検索 -%>
-      <%_ } else if ((property.type === 'time' || property.type === 'number') && 2 <= property.searchType &&  property.searchType <= 5) { -%>
-      <%= property.name %>: searchCondition.<%= property.name %> || undefined,
-      <%= property.name %>From: searchCondition.<%= property.name %>From || undefined,
-      <%= property.name %>To: searchCondition.<%= property.name %>To || undefined,
+      <%_ } else if ((field.listType === 'time' || field.listType === 'number') && 2 <= field.searchType &&  field.searchType <= 5) { -%>
+      <%= field.name.lowerCamelName %>: searchCondition.<%= field.name.lowerCamelName %> || undefined,
+      <%= field.name.lowerCamelName %>From: searchCondition.<%= field.name.lowerCamelName %>From || undefined,
+      <%= field.name.lowerCamelName %>To: searchCondition.<%= field.name.lowerCamelName %>To || undefined,
 <%#_ 配列の範囲検索 -%>
-      <%_ } else if ((property.type === 'array-time' || property.type === 'array-number') && 2 <= property.searchType &&  property.searchType <= 5) { -%>
-      <%= property.name %>: searchCondition.<%= property.name %> ? [searchCondition.<%= property.name %>] : undefined,
-      <%= property.name %>From: searchCondition.<%= property.name %>From || undefined,
-      <%= property.name %>To: searchCondition.<%= property.name %>To || undefined,
+      <%_ } else if ((field.listType === 'array-time' || field.listType === 'array-number') && 2 <= field.searchType &&  field.searchType <= 5) { -%>
+      <%= field.name.lowerCamelName %>: searchCondition.<%= field.name.lowerCamelName %> ? [searchCondition.<%= field.name.lowerCamelName %>] : undefined,
+      <%= field.name.lowerCamelName %>From: searchCondition.<%= field.name.lowerCamelName %>From || undefined,
+      <%= field.name.lowerCamelName %>To: searchCondition.<%= field.name.lowerCamelName %>To || undefined,
       <%_ } -%>
     <%_ }) -%>
       limit: pageInfo.itemsPerPage !== -1 ? pageInfo.itemsPerPage : undefined,

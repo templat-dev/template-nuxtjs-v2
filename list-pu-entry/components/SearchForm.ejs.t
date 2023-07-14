@@ -7,56 +7,56 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
       <v-card-title><%= struct.name.pascalName %>検索</v-card-title>
       <v-card-text>
         <v-layout column>
-      <%_ if (entity.listProperties.listExtraProperties) { -%>
-      <%_ entity.listProperties.listExtraProperties.forEach(function (property, key) { -%>
-        <%_ if ((property.type === 'string' || property.type === 'array-string' || property.type === 'textarea' || property.type === 'array-textarea') && property.searchType === 1) { -%>
+      <%_ if (struct.fields) { -%>
+      <%_ struct.fields.forEach(function (field, key) { -%>
+        <%_ if ((field.listType === 'string' || field.listType === 'array-string' || field.listType === 'textarea' || field.listType === 'array-textarea') && field.searchType === 1) { -%>
           <v-text-field
-            v-model="searchCondition.<%= property.name %>"
-            label="<%= property.screenLabel ? property.screenLabel : property.name %>"
+            v-model="searchCondition.<%= field.name.lowerCamelName %>"
+            label="<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName %>"
           ></v-text-field>
         <%_ } -%>
-        <%_ if ((property.type === 'number' || property.type === 'array-number') && property.searchType !== 0) { -%>
+        <%_ if ((field.listType === 'number' || field.listType === 'array-number') && field.searchType !== 0) { -%>
           <v-text-field
-            :value="searchCondition.<%= property.name %>"
-            label="<%= property.screenLabel ? property.screenLabel : property.name %>"
+            :value="searchCondition.<%= field.name.lowerCamelName %>"
+            label="<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName %>"
             type="number"
-            @input="v => searchCondition.<%= property.name %> = v === '' ? undefined : Number(v)"
+            @input="v => searchCondition.<%= field.name.lowerCamelName %> = v === '' ? undefined : Number(v)"
           ></v-text-field>
         <%_ } -%>
-        <%_ if ((property.type === 'number' || property.type === 'array-number') && 2 <= property.searchType && property.searchType <= 5) { -%>
+        <%_ if ((field.listType === 'number' || field.listType === 'array-number') && 2 <= field.searchType && field.searchType <= 5) { -%>
           <v-text-field
-            :value="searchCondition.<%= property.name %>From"
-            label="<%= property.screenLabel ? property.screenLabel : property.name %>開始"
+            :value="searchCondition.<%= field.name.lowerCamelName %>From"
+            label="<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName %>開始"
             type="number"
-            @input="v => searchCondition.<%= property.name %>From = v === '' ? undefined : Number(v)"
+            @input="v => searchCondition.<%= field.name.lowerCamelName %>From = v === '' ? undefined : Number(v)"
           ></v-text-field>
           <v-text-field
-            :value="searchCondition.<%= property.name %>To"
-            label="<%= property.screenLabel ? property.screenLabel : property.name %>終了"
+            :value="searchCondition.<%= field.name.lowerCamelName %>To"
+            label="<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName %>終了"
             type="number"
-            @input="v => searchCondition.<%= property.name %>To = v === '' ? undefined : Number(v)"
+            @input="v => searchCondition.<%= field.name.lowerCamelName %>To = v === '' ? undefined : Number(v)"
           ></v-text-field>
         <%_ } -%>
-        <%_ if ((property.type === 'time' || property.type === 'array-time') && property.searchType !== 0) { -%>
+        <%_ if ((field.listType === 'time' || field.listType === 'array-time') && field.searchType !== 0) { -%>
           <date-time-form
-            :date-time.sync="searchCondition.<%= property.name %>"
-            label="<%= property.screenLabel ? property.screenLabel : property.name %>"
+            :date-time.sync="searchCondition.<%= field.name.lowerCamelName %>"
+            label="<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName %>"
           ></date-time-form>
         <%_ } -%>
-        <%_ if ((property.type === 'time' || property.type === 'array-time') && 2 <= property.searchType &&  property.searchType <= 5) { -%>
+        <%_ if ((field.listType === 'time' || field.listType === 'array-time') && 2 <= field.searchType &&  field.searchType <= 5) { -%>
           <date-time-form
-            :date-time.sync="searchCondition.<%= property.name %>From"
-            label="<%= property.screenLabel ? property.screenLabel : property.name %>開始"
+            :date-time.sync="searchCondition.<%= field.name.lowerCamelName %>From"
+            label="<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName %>開始"
           ></date-time-form>
           <date-time-form
-            :date-time.sync="searchCondition.<%= property.name %>To"
-            label="<%= property.screenLabel ? property.screenLabel : property.name %>終了"
+            :date-time.sync="searchCondition.<%= field.name.lowerCamelName %>To"
+            label="<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName %>終了"
           ></date-time-form>
         <%_ } -%>
-        <%_ if ((property.type === 'bool' || property.type === 'array-bool') && property.searchType === 1) { -%>
+        <%_ if ((field.listType === 'bool' || field.listType === 'array-bool') && field.searchType === 1) { -%>
           <v-checkbox
-            v-model="searchCondition.<%= property.name %>"
-            label="<%= property.screenLabel ? property.screenLabel : property.name %>"
+            v-model="searchCondition.<%= field.name.lowerCamelName %>"
+            label="<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName %>"
           ></v-checkbox>
         <%_ } -%>
       <%_ }) -%>
@@ -76,92 +76,81 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
 
 <script lang="ts">
 <%_ const searchConditions = [] -%>
-<%_ let importDateTime = false -%>
-<%_ if (entity.listProperties.listExtraProperties && entity.listProperties.listExtraProperties.length > 0) { -%>
-<%_ entity.listProperties.listExtraProperties.forEach(function (property, key) { -%>
-  <%_ if ((property.type === 'string' || property.type === 'array-string' || property.type === 'time' || property.type === 'array-time') && property.searchType === 1) { -%>
-    <%_ searchConditions.push({name: property.name, type: 'string', range: false}) -%>
+<%_ if (struct.fields && struct.fields.length > 0) { -%>
+<%_ struct.fields.forEach(function (field, key) { -%>
+  <%_ if ((field.listType === 'string' || field.listType === 'array-string' || field.listType === 'time' || field.listType === 'array-time') && field.searchType === 1) { -%>
+    <%_ searchConditions.push({name: field.name.lowerCamelName, type: 'string', range: false}) -%>
   <%_ } -%>
-  <%_ if ((property.type === 'bool' || property.type === 'array-bool') && property.searchType === 1) { -%>
-    <%_ searchConditions.push({name: property.name, type: 'boolean', range: false}) -%>
+  <%_ if ((field.listType === 'bool' || field.listType === 'array-bool') && field.searchType === 1) { -%>
+    <%_ searchConditions.push({name: field.name.lowerCamelName, type: 'boolean', range: false}) -%>
   <%_ } -%>
-  <%_ if ((property.type === 'number' || property.type === 'array-number') && property.searchType === 1) { -%>
-    <%_ searchConditions.push({name: property.name, type: 'number', range: false}) -%>
+  <%_ if ((field.listType === 'number' || field.listType === 'array-number') && field.searchType === 1) { -%>
+    <%_ searchConditions.push({name: field.name.lowerCamelName, type: 'number', range: false}) -%>
   <%_ } -%>
-  <%_ if ((property.type === 'number' || property.type === 'array-number') && 2 <= property.searchType &&  property.searchType <= 5) { -%>
-    <%_ searchConditions.push({name: property.name, type: 'number', range: true}) -%>
+  <%_ if ((field.listType === 'number' || field.listType === 'array-number') && 2 <= field.searchType &&  field.searchType <= 5) { -%>
+    <%_ searchConditions.push({name: field.name.lowerCamelName, type: 'number', range: true}) -%>
   <%_ } -%>
-  <%_ if ((property.type === 'time' || property.type === 'array-time') && 2 <= property.searchType &&  property.searchType <= 5) { -%>
-    <%_ searchConditions.push({name: property.name, type: 'string', range: true}) -%>
-  <%_ } -%>
-  <%_ if ((property.type === 'time' || property.type === 'array-time')) { -%>
-  <%_ importDateTime = true -%>
+  <%_ if ((field.listType === 'time' || field.listType === 'array-time') && 2 <= field.searchType &&  field.searchType <= 5) { -%>
+    <%_ searchConditions.push({name: field.name.lowerCamelName, type: 'string', range: true}) -%>
   <%_ } -%>
 <%_ }) -%>
 <%_ } -%>
 import {Component, Emit, mixins, Prop, PropSync, Watch} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
 import Base from '@/mixins/base'
-<%_ if (importDateTime) { -%>
+<%_ if (struct.exists.search.time || struct.exists.search.arrayTime) { -%>
 import DateTimeForm from '@/components/form/DateTimeForm.vue'
 <%_ } -%>
 
-<%_ if (searchConditions.length > 0) { -%>
 export interface <%= struct.name.pascalName %>SearchCondition {
-  <%_ searchConditions.forEach(function(property) { -%>
-    <%_ if (property.type === 'string' && !property.range) { -%>
-  <%= property.name %>?: <%= property.type %>
+  <%_ searchConditions.forEach(function(searchCondition) { -%>
+    <%_ if (searchCondition.type === 'string' && !searchCondition.range) { -%>
+  <%= searchCondition.name %>?: <%= searchCondition.type %>
     <%_ } -%>
-    <%_ if (property.type === 'boolean' && !property.range) { -%>
-  <%= property.name %>?: <%= property.type %>
+    <%_ if (searchCondition.type === 'boolean' && !searchCondition.range) { -%>
+  <%= searchCondition.name %>?: <%= searchCondition.type %>
     <%_ } -%>
-    <%_ if (property.type === 'number' && !property.range) { -%>
-  <%= property.name %>?: <%= property.type %>
+    <%_ if (searchCondition.type === 'number' && !searchCondition.range) { -%>
+  <%= searchCondition.name %>?: <%= searchCondition.type %>
     <%_ } -%>
-    <%_ if (property.type === 'number' && property.range) { -%>
-  <%= property.name %>?: <%= property.type %>
-  <%= property.name %>From?: <%= property.type %>
-  <%= property.name %>To?: <%= property.type %>
+    <%_ if (searchCondition.type === 'number' && searchCondition.range) { -%>
+  <%= searchCondition.name %>?: <%= searchCondition.type %>
+  <%= searchCondition.name %>From?: <%= searchCondition.type %>
+  <%= searchCondition.name %>To?: <%= searchCondition.type %>
     <%_ } -%>
-    <%_ if (property.type === 'string' && property.range) { -%>
-  <%= property.name %>?: <%= property.type %>
-  <%= property.name %>From?: <%= property.type %>
-  <%= property.name %>To?: <%= property.type %>
+    <%_ if (searchCondition.type === 'string' && searchCondition.range) { -%>
+  <%= searchCondition.name %>?: <%= searchCondition.type %>
+  <%= searchCondition.name %>From?: <%= searchCondition.type %>
+  <%= searchCondition.name %>To?: <%= searchCondition.type %>
     <%_ } -%>
   <%_ }) -%>
 }
 
 export const INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION: <%= struct.name.pascalName %>SearchCondition = {
-  <%_ searchConditions.forEach(function(property) { -%>
-    <%_ if (property.type === 'string' && !property.range) { -%>
-  <%= property.name %>: undefined,
+  <%_ searchConditions.forEach(function(searchCondition) { -%>
+    <%_ if (searchCondition.type === 'string' && !searchCondition.range) { -%>
+  <%= searchCondition.name %>: undefined,
     <%_ } -%>
-    <%_ if (property.type === 'boolean' && !property.range) { -%>
-  <%= property.name %>: undefined,
+    <%_ if (searchCondition.type === 'boolean' && !searchCondition.range) { -%>
+  <%= searchCondition.name %>: undefined,
     <%_ } -%>
-    <%_ if (property.type === 'number' && !property.range) { -%>
-  <%= property.name %>: undefined,
+    <%_ if (searchCondition.type === 'number' && !searchCondition.range) { -%>
+  <%= searchCondition.name %>: undefined,
     <%_ } -%>
-    <%_ if (property.type === 'number' && property.range) { -%>
-  <%= property.name %>: undefined,
-  <%= property.name %>From: undefined,
-  <%= property.name %>To: undefined,
+    <%_ if (searchCondition.type === 'number' && searchCondition.range) { -%>
+  <%= searchCondition.name %>: undefined,
+  <%= searchCondition.name %>From: undefined,
+  <%= searchCondition.name %>To: undefined,
     <%_ } -%>
-    <%_ if (property.type === 'string' && property.range) { -%>
-  <%= property.name %>: undefined,
-  <%= property.name %>From: undefined,
-  <%= property.name %>To: undefined,
+    <%_ if (searchCondition.type === 'string' && searchCondition.range) { -%>
+  <%= searchCondition.name %>: undefined,
+  <%= searchCondition.name %>From: undefined,
+  <%= searchCondition.name %>To: undefined,
     <%_ } -%>
   <%_ }) -%>
 }
-<%_ } else { -%>
-export interface <%= struct.name.pascalName %>SearchCondition {
-}
 
-export const INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION: <%= struct.name.pascalName %>SearchCondition = {}
-<%_ } -%>
-
-<%_ if (importDateTime) { -%>
+<%_ if (struct.exists.search.time || struct.exists.search.arrayTime) { -%>
 @Component({
   components: {
     DateTimeForm,
