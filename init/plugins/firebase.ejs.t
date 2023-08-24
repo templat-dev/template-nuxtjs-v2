@@ -9,7 +9,7 @@ import 'firebaseui/dist/firebaseui.css'
 import * as firebaseui from 'firebaseui'
 
 // Your web app's Firebase configuration
-<%- project.plugins.find(p => p.name === 'auth')?.parameter?.[0] %>
+<%- project.plugins.find(p => p.name === 'auth')?.parameter %>
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
   firebase.analytics()
