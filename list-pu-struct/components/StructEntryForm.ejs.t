@@ -258,19 +258,19 @@ import StructArrayForm from '@/components/form/StructArrayForm.vue'
 <%_ const importStructFormSet = new Set() -%>
 <%_ struct.fields.forEach(function (field, key) { -%>
   <%_ if (field.editType === 'array-struct') { -%>
-    <%_ if (!importStructTableSet.has(field.structType)) { -%>
+    <%_ if (!importStructTableSet.has(field.structName)) { -%>
 import <%= field.structName.pascalName %>DataTable from '@/components/<%= field.structName.lowerCamelName %>/<%= field.structName.pascalName %>DataTable.vue'
-      <%_ importStructTableSet.add(field.structType) -%>
+      <%_ importStructTableSet.add(field.structName) -%>
     <%_ } -%>
-    <%_ if (!importStructFormSet.has(field.structType)) { -%>
+    <%_ if (!importStructFormSet.has(field.structName)) { -%>
 import <%= field.structName.pascalName %>EntryForm, {INITIAL_<%= field.structName.upperSnakeName %>} from '@/components/<%= field.structName.lowerCamelName %>/<%= field.structName.pascalName %>EntryForm.vue'
-      <%_ importStructFormSet.add(field.structType) -%>
+      <%_ importStructFormSet.add(field.structName) -%>
     <%_ } -%>
   <%_ } -%>
   <%_ if (field.editType === 'struct') { -%>
-    <%_ if (!importStructFormSet.has(field.structType)) { -%>
+    <%_ if (!importStructFormSet.has(field.structName)) { -%>
 import <%= field.structName.pascalName %>EntryForm, {INITIAL_<%= field.structName.upperSnakeName %>} from '@/components/<%= field.structName.lowerCamelName %>/<%= field.structName.pascalName %>EntryForm.vue'
-      <%_ importStructFormSet.add(field.structType) -%>
+      <%_ importStructFormSet.add(field.structName) -%>
     <%_ } -%>
   <%_ } -%>
 <%_ }) -%>
@@ -319,19 +319,19 @@ export const INITIAL_<%= struct.name.upperSnakeName %>: Model<%= struct.name.pas
 <%_ const componentsStructFormSet = new Set() -%>
 <%_ struct.fields.forEach(function (field, key) { -%>
   <%_ if (field.editType === 'array-struct') { -%>
-    <%_ if (!componentsStructTableSet.has(field.structType)) { -%>
+    <%_ if (!componentsStructTableSet.has(field.structName)) { -%>
     <%= field.structName.pascalName %>DataTable,
-      <%_ componentsStructTableSet.add(field.structType) -%>
+      <%_ componentsStructTableSet.add(field.structName) -%>
     <%_ } -%>
-    <%_ if (!componentsStructFormSet.has(field.structType)) { -%>
+    <%_ if (!componentsStructFormSet.has(field.structName)) { -%>
     <%= field.structName.pascalName %>EntryForm,
-      <%_ componentsStructFormSet.add(field.structType) -%>
+      <%_ componentsStructFormSet.add(field.structName) -%>
     <%_ } -%>
   <%_ } -%>
   <%_ if (field.editType === 'struct') { -%>
-    <%_ if (!componentsStructFormSet.has(field.structType)) { -%>
+    <%_ if (!componentsStructFormSet.has(field.structName)) { -%>
     <%= field.structName.pascalName %>EntryForm,
-      <%_ componentsStructFormSet.add(field.structType) -%>
+      <%_ componentsStructFormSet.add(field.structName) -%>
     <%_ } -%>
   <%_ } -%>
 <%_ }) -%>
