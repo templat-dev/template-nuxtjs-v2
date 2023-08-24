@@ -4,7 +4,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
 <template>
   <v-dialog v-model="syncedOpen" max-width="800px">
     <v-card :elevation="0">
-      <v-card-title><%= struct.name.pascalName %>検索</v-card-title>
+      <v-card-title><%= struct.screenLabel || struct.name.pascalName %>検索</v-card-title>
       <v-card-text>
         <v-layout column>
       <%_ if (struct.fields) { -%>
