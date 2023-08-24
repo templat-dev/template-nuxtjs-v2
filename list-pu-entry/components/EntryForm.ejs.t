@@ -176,15 +176,15 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
                 :initial="initial<%= field.structName.pascalName %>"
                 :items.sync="syncedTarget.<%= field.name.lowerCamelName %>">
                 <template v-slot:table="{items, openEntryForm, removeRow}">
-                  <<%= field.structName.lowerKebabName %>-data-table
+                  <<%= field.structName.pascalName %>DataTable
                     :has-parent="true"
                     :items="items"
                     @openEntryForm="openEntryForm"
                     @remove="removeRow"
-                  ></<%= field.structName.lowerKebabName %>-data-table>
+                  ></<%= field.structName.pascalName %>DataTable>
                 </template>
                 <template v-slot:form="{editIndex, isEntryFormOpen, editTarget, closeForm, removeForm, updatedForm}">
-                  <<%= field.structName.lowerKebabName %>-entry-form
+                  <<%= field.structName.pascalName %>EntryForm
                     :has-parent="true"
                     :is-new="editIndex === NEW_INDEX"
                     :open="isEntryFormOpen"
@@ -192,7 +192,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
                     @close="closeForm"
                     @remove="removeForm"
                     @updated="updatedForm"
-                  ></<%= field.structName.lowerKebabName %>-entry-form>
+                  ></<%= field.structName.pascalName %>EntryForm>
                 </template>
               </struct-array-form>
             </expansion>
@@ -201,12 +201,12 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
           <%_ if (field.editType === 'struct') { -%>
           <v-flex xs12>
             <expansion expanded label="<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName %>">
-              <<%= field.structName.lowerKebabName %>-entry-form
+              <<%= field.structName.pascalName %>EntryForm
                 ref="<%= field.name.lowerCamelName %>Form"
                 :has-parent="true"
                 :is-embedded="true"
                 :target.sync="syncedTarget.<%= field.name.lowerCamelName %>"
-              ></<%= field.structName.lowerKebabName %>-entry-form>
+              ></<%= field.structName.pascalName %>EntryForm>
             </expansion>
           </v-flex>
           <%_ } -%>

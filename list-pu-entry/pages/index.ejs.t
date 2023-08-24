@@ -3,7 +3,7 @@ to: "<%= struct.generateEnable ? `${rootDirectory}/pages/${struct.name.lowerCame
 ---
 <template>
   <v-layout>
-    <<%= struct.name.lowerKebabName %>-data-table
+    <<%= struct.name.pascalName %>DataTable
       :is-loading="isLoading"
       :items="<%= struct.name.lowerCamelPluralName %>"
       :page-info.sync="pageInfo"
@@ -14,15 +14,15 @@ to: "<%= struct.generateEnable ? `${rootDirectory}/pages/${struct.name.lowerCame
       @onChangeSearch="reFetch"
       @openEntryForm="openEntryForm"
       @remove="removeRow"
-    ></<%= struct.name.lowerKebabName %>-data-table>
+    ></<%= struct.name.pascalName %>DataTable>
     <v-dialog v-model="isEntryFormOpen" max-width="800px" persistent>
-      <<%= struct.name.lowerKebabName %>-entry-form
+      <<%= struct.name.pascalName %>EntryForm
         :is-new="editIndex === NEW_INDEX"
         :open.sync="isEntryFormOpen"
         :target.sync="editTarget"
         @remove="removeForm"
         @updated="reFetch"
-      ></<%= struct.name.lowerKebabName %>-entry-form>
+      ></<%= struct.name.pascalName %>EntryForm>
     </v-dialog>
   </v-layout>
 </template>

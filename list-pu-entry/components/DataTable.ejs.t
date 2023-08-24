@@ -93,11 +93,11 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
       </template>
     </app-data-table>
 <%_ if (struct.structType !== 'struct') { -%>
-    <<%= struct.name.lowerKebabName %>-search-form
+    <<%= struct.name.pascalName %>SearchForm
       :current-search-condition="syncedSearchCondition"
       :open.sync="isSearchFormOpen"
       @search="search"
-    ></<%= struct.name.lowerKebabName %>-search-form>
+    ></<%= struct.name.pascalName %>SearchForm>
 <%_ } -%>
   </v-flex>
 </template>
