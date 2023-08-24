@@ -17,7 +17,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
       <!-- ヘッダー -->
       <template #top>
         <v-toolbar color="white" flat>
-          <v-toolbar-title><%= struct.screenLabel %>一覧</v-toolbar-title>
+          <v-toolbar-title><%= struct.screenLabel || struct.name.pascalName %>一覧</v-toolbar-title>
 <%_ if (struct.structType !== 'struct') { -%>
           <template v-if="!hasParent">
             <v-divider class="mx-4" inset vertical></v-divider>
