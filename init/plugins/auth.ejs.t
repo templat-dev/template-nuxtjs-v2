@@ -5,11 +5,11 @@ force: true
 import {Context} from '@nuxt/types'
 import globalAxios from 'axios'
 import {onAuthStateChanged} from 'firebase/auth'
-import {auth} from '~/plugins/firebase'
+import {firebaseAuth} from '@/plugins/firebase'
 
 export default async ({route}: Context) => {
   await new Promise((resolve) => {
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(firebaseAuth, async (user) => {
       if (user) {
         globalAxios.interceptors.request.use(async request => {
           request.headers.common = {'Authorization': `Bearer ${await user.getIdToken()}`}
