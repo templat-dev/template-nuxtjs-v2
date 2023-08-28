@@ -31,10 +31,7 @@ force: true
       "@nuxt/types",
       "@nuxtjs/axios",
       "@types/node",
-      "@nuxtjs/vuetify",
-<%_ if (project.plugins.find(p => p.name === 'pay')?.enable) { -%>
-      "stripe-v3"
-<%_ } -%>
+      "@nuxtjs/vuetify"
     ],
   },
   "exclude": [

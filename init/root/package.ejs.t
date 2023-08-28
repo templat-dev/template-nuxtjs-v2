@@ -22,9 +22,6 @@ force: true
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
-<%_ if (project.plugins.find(p => p.name === 'pay')?.enable) { -%>
-    "@stripe/stripe-js": "^1.17.1",
-<%_ } -%>
     "date-fns": "^2.30.0",
 <%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
     "firebase": "^10.3.0",
@@ -41,12 +38,7 @@ force: true
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/vuetify": "^1.12.3",
     "@openapitools/openapi-generator-cli": "^1.0.18-5.0.0-beta2",
-<%_ if (project.plugins.find(p => p.name === 'pay')?.enable) { -%>
     "@types/lodash-es": "^4.17.8"
-    "@types/stripe-v3": "^3.1.25"
-<%_ } else { -%>
-    "@types/lodash-es": "^4.17.8"
-<%_ } -%>
   },
   "resolutions": {
     "//": "https://stackoverflow.com/questions/67631879/nuxtjs-vuetify-throwing-lots-of-using-for-division-is-deprecated-and-will-be",
