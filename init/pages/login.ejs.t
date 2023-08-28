@@ -14,7 +14,7 @@ force: true
 
 <script lang="ts">
 import {Component, mixins} from 'nuxt-property-decorator'
-import firebase from 'firebase/app'
+import {GoogleAuthProvider} from '@firebase/auth'
 import Base from '@/mixins/base'
 import {authUI} from '@/plugins/firebase'
 import {vxm} from '@/store'
@@ -22,7 +22,7 @@ import {vxm} from '@/store'
 const AUTH_UI_DEFAULT_CONFIG = {
   signInOptions: [
     {
-      provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      provider: GoogleAuthProvider.PROVIDER_ID,
       scopes: []
     }
   ]

@@ -25,26 +25,27 @@ force: true
 <%_ if (project.plugins.find(p => p.name === 'pay')?.enable) { -%>
     "@stripe/stripe-js": "^1.17.1",
 <%_ } -%>
-    "@nuxtjs/vuetify": "^1.12.1",
-    "date-fns": "^2.21.1",
+    "date-fns": "^2.30.0",
 <%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
-    "firebase": "^8.10.0",
-    "firebaseui": "^5.0.0",
+    "firebase": "^10.3.0",
+    "firebaseui": "^6.1.0",
 <%_ } -%>
     "lodash-es": "^4.17.21",
-    "nuxt": "^2.15.7",
+    "nuxt": "^2.17.1",
+    "vue": "^2.7.14",
     "nuxt-property-decorator": "^2.9.1",
-    "vuex-class-component": "^2.3.5"
+    "vuex-class-component": "^2.3.6"
   },
   "devDependencies": {
-    "@nuxt/types": "^2.15.7",
+    "@nuxt/types": "^2.15.8",
     "@nuxt/typescript-build": "^2.1.0",
+    "@nuxtjs/vuetify": "^1.12.3",
     "@openapitools/openapi-generator-cli": "^1.0.18-5.0.0-beta2",
 <%_ if (project.plugins.find(p => p.name === 'pay')?.enable) { -%>
-    "@types/lodash-es": "^4.17.4",
+    "@types/lodash-es": "^4.17.8"
     "@types/stripe-v3": "^3.1.25"
 <%_ } else { -%>
-    "@types/lodash-es": "^4.17.4"
+    "@types/lodash-es": "^4.17.8"
 <%_ } -%>
   },
   "resolutions": {
