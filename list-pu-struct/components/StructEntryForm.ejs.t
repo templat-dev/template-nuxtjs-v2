@@ -385,7 +385,7 @@ export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base)
       (this.$refs.entryForm as VForm).resetValidation()
 <%_ struct.fields.forEach(function (field, key) { -%>
   <%_ if (field.editType === 'struct') { -%>
-      ;((this.$refs.<%= field %>Form as Vue)?.$refs.entryForm as VForm)?.resetValidation()
+      ;((this.$refs.<%= field.name.lowerCamelName %>Form as Vue)?.$refs.entryForm as VForm)?.resetValidation()
   <%_ } -%>
 <%_ }) -%>
     }
@@ -402,7 +402,7 @@ export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base)
     if (!(this.$refs.entryForm as VForm).validate()
 <%_ struct.fields.forEach(function (field, key) { -%>
   <%_ if (field.editType === 'struct') { -%>
-      || ((this.$refs.<%= field %>Form as Vue)?.$refs.entryForm as VForm)?.validate() === false
+      || ((this.$refs.<%= field.name.lowerCamelName %>Form as Vue)?.$refs.entryForm as VForm)?.validate() === false
   <%_ } -%>
 <%_ }) -%>
     ) {
