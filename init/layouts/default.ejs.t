@@ -53,7 +53,7 @@ force: true
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
 <%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
-import {auth} from '~/plugins/firebase'
+import {firebaseAuth} from '@/plugins/firebase'
 <%_ } -%>
 import AppLoading from '@/components/modal/AppLoading.vue'
 import AppDialog from '@/components/modal/AppDialog.vue'
@@ -93,7 +93,7 @@ export default class DefaultLayout extends Vue {
   }
 
   async signOut() {
-    await auth.signOut()
+    await firebaseAuth.signOut()
     window.location.reload()
   }
 <%_ } -%>

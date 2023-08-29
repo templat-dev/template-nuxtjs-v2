@@ -2,19 +2,23 @@
 to: "<%= project.plugins.find(p => p.name === 'auth')?.enable ? `${rootDirectory}/plugins/firebase.ts` : null %>"
 force: true
 ---
-import firebase from 'firebase/app'
-import 'firebase/analytics'
-import 'firebase/auth'
+import {initializeApp} from 'firebase/app'
+import f, {getAuth} from 'firebase/auth'
+import {initializeAnalytics} from 'firebase/analytics'
+import {auth} from 'firebaseui'
 import 'firebaseui/dist/firebaseui.css'
-import * as firebaseui from 'firebaseui'
 
 // Your web app's Firebase configuration
 <%- project.plugins.find(p => p.name === 'auth')?.parameter %>
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
-  firebase.analytics()
-}
-const auth = firebase.auth()
-const authUI = new firebaseui.auth.AuthUI(auth)
 
-export {auth, authUI}
+const firebaseApp = initializeApp(firebaseConfig)
+
+let firebaseAuth: f.Auth, firebaseAuthUI: auth.AuthUI
+if (firebaseApp.name && typeof window !== 'undefined') {
+  initializeAnalytics(firebaseApp)
+  firebaseAuth = getAuth(firebaseApp)
+  const firebaseui = require('firebaseui')
+  firebaseAuthUI = new firebaseui.auth.AuthUI(firebaseAuth)
+}
+
+export {firebaseAuth, firebaseAuthUI}

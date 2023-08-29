@@ -3,12 +3,13 @@ to: "<%= project.plugins.find(p => p.name === 'auth')?.enable ? `${rootDirectory
 force: true
 ---
 import {Context} from '@nuxt/types'
-import firebase from 'firebase/app'
 import globalAxios from 'axios'
+import {onAuthStateChanged} from 'firebase/auth'
+import {firebaseAuth} from '@/plugins/firebase'
 
 export default async ({route}: Context) => {
   await new Promise((resolve) => {
-    firebase.auth().onAuthStateChanged(async (user) => {
+    onAuthStateChanged(firebaseAuth, async (user) => {
       if (user) {
         globalAxios.interceptors.request.use(async request => {
           request.headers.common = {'Authorization': `Bearer ${await user.getIdToken()}`}

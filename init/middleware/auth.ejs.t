@@ -3,13 +3,13 @@ to: "<%= project.plugins.find(p => p.name === 'auth')?.enable ? `${rootDirectory
 force: true
 ---
 import {Context} from '@nuxt/types'
-import {auth} from '~/plugins/firebase'
+import {firebaseAuth} from '@/plugins/firebase'
 
 export default async ({route, redirect}: Context) => {
   if (route.path === '/login') {
     return
   }
-  if (!auth.currentUser) {
+  if (!firebaseAuth.currentUser) {
     return redirect('/login')
   }
 }
