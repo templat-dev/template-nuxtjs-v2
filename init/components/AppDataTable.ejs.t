@@ -65,7 +65,7 @@ export const DEFAULT_FOOTER_PROPS = {
 }
 
 @Component
-export default class AppDataTable<I, S> extends mixins(Base) {
+export default class AppDataTable<I> extends mixins(Base) {
   /** ヘッダー定義 */
   @Prop({type: Array, required: true})
   headers!: DataTableHeader[]
