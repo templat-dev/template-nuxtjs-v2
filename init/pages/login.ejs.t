@@ -1,5 +1,5 @@
 ---
-to: "<%= project.plugins.find(p => p.name === 'auth')?.enable ? `${rootDirectory}/pages/login.vue` : null %>"
+to: "<%= project.plugins.find(p => p.name === 'auth')?.enable ? `${rootDirectory}/pages/${project.buildConfig.webPageRoot}login.vue` : null %>"
 force: true
 ---
 <template>

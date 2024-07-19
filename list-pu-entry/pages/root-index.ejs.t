@@ -1,5 +1,5 @@
 ---
-to: "<%= struct.generateEnable ? `${rootDirectory}/pages/index.vue` : null %>"
+to: "<%= struct.generateEnable ? `${rootDirectory}/pages/${project.buildConfig.webPageRoot}index.vue` : null %>"
 inject: true
 skip_if: <!-- メニュー <%= struct.name.lowerCamelName %> -->
 after: <!-- メニュー -->

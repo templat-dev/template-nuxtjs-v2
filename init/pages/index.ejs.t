@@ -1,5 +1,5 @@
 ---
-to: <%= rootDirectory %>/pages/index.vue
+to: <%= rootDirectory %>/pages/<%= project.buildConfig.webPageRoot %>index.vue
 force: true
 ---
 <template>
