@@ -9,6 +9,7 @@ force: true
   "author": "TemPlat Console",
   "private": true,
   "scripts": {
+    "openapi": "openapi-generator-cli generate --generator-key default",
     "dev": "nuxt --dotenv ./env/.env",
     "dev:dev": "nuxt --dotenv ./env/.env.dev",
     "dev:stg": "nuxt --dotenv ./env/.env.stg",
@@ -37,7 +38,7 @@ force: true
     "@nuxt/types": "^2.15.8",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/vuetify": "^1.12.3",
-    "@openapitools/openapi-generator-cli": "^1.0.18-5.0.0-beta2",
+    "@openapitools/openapi-generator-cli": "^2.13.4",
     "@types/lodash-es": "^4.17.8"
   },
   "resolutions": {
