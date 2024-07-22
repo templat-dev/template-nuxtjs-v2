@@ -203,7 +203,7 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
 <%_ } -%>
 
   @Emit('clickRow')
-  clickRow(item?: ModelSimpleTable) {}
+  clickRow(item?: Model<%= struct.name.pascalName %>) {}
 
   @Emit('clickAdd')
   clickAdd() {}
