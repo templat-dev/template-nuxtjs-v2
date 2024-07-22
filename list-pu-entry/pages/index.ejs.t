@@ -19,7 +19,6 @@ to: "<%= struct.generateEnable ? `${rootDirectory}/pages/${project.buildConfig.w
     ></<%= struct.name.pascalName %>DataTable>
     <v-dialog v-model="isEntryFormOpen" max-width="800px" persistent>
       <<%= struct.name.pascalName %>EntryForm
-        :is-new="editIndex === NEW_INDEX"
         :open.sync="isEntryFormOpen"
         :target.sync="editTarget"
         @remove="remove"
