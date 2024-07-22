@@ -47,10 +47,10 @@ const config: Configuration = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '@/plugins/env',
+    '~/plugins/env',
 <%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
-    '@/plugins/auth',
-    '@/plugins/firebase',
+    '~/plugins/auth',
+    '~/plugins/firebase',
 <%_ } -%>
   ],
 
