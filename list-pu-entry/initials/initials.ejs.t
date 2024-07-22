@@ -1,8 +1,8 @@
 ---
 to: <%= rootDirectory %>/initials/<%= struct.name.pascalName %>Initials.ts
 ---
-import {Model<%= struct.name.pascalName %>} from "~/apis";
-
+import {Writable} from 'type-fest'
+import {Model<%= struct.name.pascalName %>, <%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request} from '~/apis'
 <%_ const searchConditions = [] -%>
 <%_ if (struct.fields && struct.fields.length > 0) { -%>
 <%_ struct.fields.forEach(function (field, key) { -%>
