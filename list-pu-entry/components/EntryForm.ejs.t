@@ -354,7 +354,7 @@ export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base)
   @Prop({type: Boolean, default: false})
   hasParent!: boolean
 
-<%_ if (struct.structType !== 'struct') { -%><%# Structでない場合 -%>
+<%_ if (struct.structType === 'struct') { -%>
   /** 編集状態 (true: 新規, false: 更新) */
   @Prop({type: Boolean, default: true})
   isNew!: boolean
