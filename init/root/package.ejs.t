@@ -28,8 +28,9 @@ force: true
 <%_ } -%>
     "lodash-es": "^4.17.21",
     "nuxt": "^2.17.1",
-    "vue": "^2.7.14",
     "nuxt-property-decorator": "^2.9.1",
+    "type-fest": "^4.22.1",
+    "vue": "^2.7.14",
     "vuex-class-component": "^2.3.6"
   },
   "devDependencies": {

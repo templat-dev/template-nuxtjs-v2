@@ -97,36 +97,14 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
 <%_ } -%>
 import {Component, Emit, mixins, Prop, PropSync, Watch} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
+import {Writable} from 'type-fest'
 import Base from '@/mixins/base'
+import {<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request} from '@/apis'
 <%_ if (struct.exists.search.time || struct.exists.search.arrayTime) { -%>
 import DateTimeForm from '@/components/form/DateTimeForm.vue'
 <%_ } -%>
 
-export interface <%= struct.name.pascalName %>SearchCondition {
-  <%_ searchConditions.forEach(function(searchCondition) { -%>
-    <%_ if (searchCondition.type === 'string' && !searchCondition.range) { -%>
-  <%= searchCondition.name %>?: <%= searchCondition.type %>
-    <%_ } -%>
-    <%_ if (searchCondition.type === 'boolean' && !searchCondition.range) { -%>
-  <%= searchCondition.name %>?: <%= searchCondition.type %>
-    <%_ } -%>
-    <%_ if (searchCondition.type === 'number' && !searchCondition.range) { -%>
-  <%= searchCondition.name %>?: <%= searchCondition.type %>
-    <%_ } -%>
-    <%_ if (searchCondition.type === 'number' && searchCondition.range) { -%>
-  <%= searchCondition.name %>?: <%= searchCondition.type %>
-  <%= searchCondition.name %>From?: <%= searchCondition.type %>
-  <%= searchCondition.name %>To?: <%= searchCondition.type %>
-    <%_ } -%>
-    <%_ if (searchCondition.type === 'string' && searchCondition.range) { -%>
-  <%= searchCondition.name %>?: <%= searchCondition.type %>
-  <%= searchCondition.name %>From?: <%= searchCondition.type %>
-  <%= searchCondition.name %>To?: <%= searchCondition.type %>
-    <%_ } -%>
-  <%_ }) -%>
-}
-
-export const INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION: <%= struct.name.pascalName %>SearchCondition = {
+export const INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request> = {
   <%_ searchConditions.forEach(function(searchCondition) { -%>
     <%_ if (searchCondition.type === 'string' && !searchCondition.range) { -%>
   <%= searchCondition.name %>: undefined,
@@ -166,10 +144,10 @@ export default class <%= struct.name.pascalName %>SearchForm extends mixins(Base
 
   /** 検索条件 */
   @Prop({type: Object, required: true})
-  currentSearchCondition!: <%= struct.name.pascalName %>SearchCondition
+  currentSearchCondition!: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request>
 
   /** 変更対象の検索条件 */
-  searchCondition: <%= struct.name.pascalName %>SearchCondition = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION)
+  searchCondition: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request> = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION)
 
   @Watch('syncedOpen')
   initialize() {

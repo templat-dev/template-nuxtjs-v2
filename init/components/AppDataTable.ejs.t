@@ -4,7 +4,6 @@ force: true
 ---
 <template>
   <v-data-table
-    v-bind="$attrs"
     :footer-props="footerProps"
     :headers="headers"
     :items="items || []"
@@ -15,14 +14,15 @@ force: true
     :sort-by.sync="syncedPageInfo.sortBy"
     :sort-desc.sync="syncedPageInfo.sortDesc"
     class="data-table"
-    @click:row="item => openEntryForm(item)"
+    v-bind="$attrs"
+    @click:row="item => clickRow(item)"
     @update:page="handleChangePageInfo()"
     @update:items-per-page="handleChangePageInfo()"
     @update:sort-by="handleChangePageInfo('sortBy')"
     @update:sort-desc="handleChangePageInfo('sortDesc')"
   >
     <template v-for="(_, slotName) in $scopedSlots" v-slot:[slotName]="props">
-      <slot v-bind="props" :name="slotName"/>
+      <slot :name="slotName" v-bind="props"/>
     </template>
   </v-data-table>
 </template>
@@ -110,13 +110,10 @@ export default class AppDataTable<I> extends mixins(Base) {
   }
 
   @Emit('onChangePageInfo')
-  onChangePageInfo() {
-  }
+  onChangePageInfo() {}
 
-  @Emit('openEntryForm')
-  openEntryForm(item: I) {
-    return item
-  }
+  @Emit('clickRow')
+  clickRow(item: I) {}
 }
 </script>
 

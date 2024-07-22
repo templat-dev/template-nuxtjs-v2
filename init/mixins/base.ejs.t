@@ -15,8 +15,6 @@ export interface VForm extends HTMLFormElement {
 
 @Component
 export default class Base extends Vue {
-  readonly NEW_INDEX = -1
-
   formatISO(date: Date) {
     return formatISO(date)
   }

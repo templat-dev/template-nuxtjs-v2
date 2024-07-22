@@ -183,10 +183,10 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
                     @remove="removeRow"
                   ></<%= field.structName.pascalName %>DataTable>
                 </template>
-                <template v-slot:form="{editIndex, isEntryFormOpen, editTarget, closeForm, removeForm, updatedForm}">
+                <template v-slot:form="{isNew, isEntryFormOpen, editTarget, closeForm, removeForm, updatedForm}">
                   <<%= field.structName.pascalName %>EntryForm
                     :has-parent="true"
-                    :is-new="editIndex === NEW_INDEX"
+                    :is-new="isNew"
                     :open="isEntryFormOpen"
                     :target="editTarget"
                     @close="closeForm"
@@ -354,9 +354,15 @@ export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base)
   @Prop({type: Boolean, default: false})
   hasParent!: boolean
 
+<%_ if (struct.structType !== 'struct') { -%><%# Structでない場合 -%>
   /** 編集状態 (true: 新規, false: 更新) */
   @Prop({type: Boolean, default: true})
   isNew!: boolean
+<%_ } else { -%>
+  get isNew() {
+    return !this.syncedTarget.id
+  }
+<%_ } -%>
 <%_ struct.fields.forEach(function (field, key) { -%>
   <%_ if (field.editType === 'array-struct') { -%>
 
@@ -444,13 +450,10 @@ export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base)
   }
 
   @Emit('updated')
-  saved() {
-  }
+  saved() {}
 
   @Emit('remove')
-  async remove() {
-    return this.syncedTarget
-  }
+  async remove() {}
 
   @Emit('close')
   close() {

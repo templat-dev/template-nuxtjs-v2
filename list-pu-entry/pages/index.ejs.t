@@ -10,17 +10,19 @@ to: "<%= struct.generateEnable ? `${rootDirectory}/pages/${project.buildConfig.w
       :search-condition.sync="searchCondition"
       :total-count="totalCount"
       class="elevation-1"
+      @clickAdd="openEntryForm"
+      @clickRow="openEntryForm"
       @onChangePageInfo="reFetch"
       @onChangeSearch="reFetch"
       @openEntryForm="openEntryForm"
-      @remove="removeRow"
+      @remove="remove"
     ></<%= struct.name.pascalName %>DataTable>
     <v-dialog v-model="isEntryFormOpen" max-width="800px" persistent>
       <<%= struct.name.pascalName %>EntryForm
         :is-new="editIndex === NEW_INDEX"
         :open.sync="isEntryFormOpen"
         :target.sync="editTarget"
-        @remove="removeForm"
+        @remove="remove"
         @updated="reFetch"
       ></<%= struct.name.pascalName %>EntryForm>
     </v-dialog>
@@ -30,16 +32,14 @@ to: "<%= struct.generateEnable ? `${rootDirectory}/pages/${project.buildConfig.w
 <script lang="ts">
 import {Component, mixins} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
+import {Writable} from 'type-fest'
 import {Context} from '@nuxt/types'
 import {vxm} from '@/store'
 import Base from '@/mixins/base'
-import {<%= struct.name.pascalName %>Api, Model<%= struct.name.pascalPluralName %>, Model<%= struct.name.pascalName %>} from '@/apis'
+import {<%= struct.name.pascalName %>Api, Model<%= struct.name.pascalPluralName %>, Model<%= struct.name.pascalName %>, <%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request} from '@/apis'
 import {DataTablePageInfo, INITIAL_DATA_TABLE_PAGE_INFO} from '@/components/common/AppDataTable.vue'
 import <%= struct.name.pascalName %>DataTable from '@/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>DataTable.vue'
-import {
-  <%= struct.name.pascalName %>SearchCondition,
-  INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION
-} from '@/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
+import {INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION} from '@/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
 import <%= struct.name.pascalName %>EntryForm, {INITIAL_<%= struct.name.upperSnakeName %>} from '@/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>EntryForm.vue'
 
 @Component({
@@ -65,7 +65,7 @@ export default class <%= struct.name.pascalPluralName %> extends mixins(Base) {
   isLoading: boolean = false
 
   /** 検索条件 */
-  searchCondition: <%= struct.name.pascalName %>SearchCondition = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION)
+  searchCondition: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request> = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION)
 
   /** 入力フォームの表示表示状態 (true: 表示, false: 非表示) */
   isEntryFormOpen: boolean = false
@@ -78,29 +78,12 @@ export default class <%= struct.name.pascalPluralName %> extends mixins(Base) {
 
   static async fetch(
     {searchCondition = INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION, pageInfo = INITIAL_DATA_TABLE_PAGE_INFO}
-      : { searchCondition: <%= struct.name.pascalName %>SearchCondition, pageInfo: DataTablePageInfo }
+      : { searchCondition: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request>, pageInfo: DataTablePageInfo }
       = {searchCondition: INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION, pageInfo: INITIAL_DATA_TABLE_PAGE_INFO}
   ): Promise<Model<%= struct.name.pascalPluralName %>> {
     return await new <%= struct.name.pascalName %>Api().search<%= struct.name.pascalName %>({
     <%_ struct.fields.forEach(function(field, index){ -%>
-<%#_ 通常の検索 -%>
-      <%_ if ((field.listType === 'string' || field.listType === 'time' || field.listType === 'bool' || field.listType === 'number')  && field.searchType === 1) { -%>
-      <%= field.name.lowerCamelName %>: searchCondition.<%= field.name.lowerCamelName %> || undefined,
-<%#_ 配列の検索 -%>
-      <%_ } else if ((field.listType === 'array-string' || field.listType === 'array-time' || field.listType === 'array-bool' || field.listType === 'array-number')  && field.searchType === 1) { -%>
-      <%= field.name.lowerCamelName %>: searchCondition.<%= field.name.lowerCamelName %> ? [searchCondition.<%= field.name.lowerCamelName %>] : undefined,
-<%#_ 範囲検索 -%>
-      <%_ } else if ((field.listType === 'time' || field.listType === 'number') && 2 <= field.searchType &&  field.searchType <= 5) { -%>
-      <%= field.name.lowerCamelName %>: searchCondition.<%= field.name.lowerCamelName %> || undefined,
-      <%= field.name.lowerCamelName %>From: searchCondition.<%= field.name.lowerCamelName %>From || undefined,
-      <%= field.name.lowerCamelName %>To: searchCondition.<%= field.name.lowerCamelName %>To || undefined,
-<%#_ 配列の範囲検索 -%>
-      <%_ } else if ((field.listType === 'array-time' || field.listType === 'array-number') && 2 <= field.searchType &&  field.searchType <= 5) { -%>
-      <%= field.name.lowerCamelName %>: searchCondition.<%= field.name.lowerCamelName %> ? [searchCondition.<%= field.name.lowerCamelName %>] : undefined,
-      <%= field.name.lowerCamelName %>From: searchCondition.<%= field.name.lowerCamelName %>From || undefined,
-      <%= field.name.lowerCamelName %>To: searchCondition.<%= field.name.lowerCamelName %>To || undefined,
-      <%_ } -%>
-    <%_ }) -%>
+      ...searchCondition,
       limit: pageInfo.itemsPerPage !== -1 ? pageInfo.itemsPerPage : undefined,
 <%_ if (project.dbType === 'datastore') { -%>
       cursor: pageInfo.page !== 1 ? pageInfo.cursors[pageInfo.page - 2] : undefined,
@@ -154,24 +137,14 @@ export default class <%= struct.name.pascalPluralName %> extends mixins(Base) {
   openEntryForm(<%= struct.name.lowerCamelName %>?: Model<%= struct.name.pascalName %>) {
     if (!!<%= struct.name.lowerCamelName %>) {
       this.editTarget = cloneDeep(<%= struct.name.lowerCamelName %>)
-      this.editIndex = this.<%= struct.name.lowerCamelPluralName %>.indexOf(<%= struct.name.lowerCamelName %>)
     } else {
       this.editTarget = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>)
-      this.editIndex = this.NEW_INDEX
     }
     this.isEntryFormOpen = true
   }
 
-  removeRow(item: Model<%= struct.name.pascalName %>) {
-    const index = this.<%= struct.name.lowerCamelPluralName %>.indexOf(item)
-    this.remove(index)
-  }
-
-  removeForm() {
-    this.remove(this.editIndex)
-  }
-
-  async remove(index: number) {
+  async remove(<%= struct.name.lowerCamelName %>?: Model<%= struct.name.pascalName %>) {
+    <%= struct.name.lowerCamelName %> = <%= struct.name.lowerCamelName %> || this.editTarget!
     vxm.app.showDialog({
       title: '削除確認',
       message: '削除してもよろしいですか？',
@@ -179,7 +152,7 @@ export default class <%= struct.name.pascalPluralName %> extends mixins(Base) {
       positive: async () => {
         vxm.app.showLoading()
         try {
-          await new <%= struct.name.pascalName %>Api().delete<%= struct.name.pascalName %>({id: this.<%= struct.name.lowerCamelPluralName %>[index].id!})
+          await new <%= struct.name.pascalName %>Api().delete<%= struct.name.pascalName %>({id: <%= struct.name.lowerCamelName %>!.id!})
           this.isEntryFormOpen = false
           await this.reFetch()
         } finally {

@@ -12,8 +12,8 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
       :total-count="totalCount"
       loading-text="読み込み中"
       no-data-text="該当データ無し"
-      @onChangePageInfo="onChangePageInfo"
-      @openEntryForm="openEntryForm">
+      @clickRow="clickRow"
+      @onChangePageInfo="onChangePageInfo">
       <!-- ヘッダー -->
       <template #top>
         <v-toolbar color="white" flat>
@@ -28,7 +28,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
           </template>
 <%_ } -%>
           <v-spacer></v-spacer>
-          <v-btn class="action-button" color="primary" dark fab right small top @click="openEntryForm()">
+          <v-btn class="action-button" color="primary" dark fab right small top @click="clickAdd">
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </v-toolbar>
@@ -190,13 +190,11 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
 <%_ } -%>
 
   @Emit('onChangePageInfo')
-  onChangePageInfo() {
-  }
+  onChangePageInfo() {}
 <%_ if (struct.structType !== 'struct') { -%>
 
   @Emit('onChangeSearch')
-  onChangeSearch() {
-  }
+  onChangeSearch() {}
 
   search(searchCondition: <%= struct.name.pascalName %>SearchCondition) {
     this.syncedSearchCondition = searchCondition
@@ -204,15 +202,14 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
   }
 <%_ } -%>
 
-  @Emit('openEntryForm')
-  openEntryForm(item?: Model<%= struct.name.pascalName %>) {
-    return item
-  }
+  @Emit('clickRow')
+  clickRow(item?: ModelSimpleTable) {}
+
+  @Emit('clickAdd')
+  clickAdd() {}
 
   @Emit('remove')
-  remove(item: Model<%= struct.name.pascalName %>) {
-    return item
-  }
+  remove() {}
 }
 </script>
 

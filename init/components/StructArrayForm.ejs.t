@@ -15,9 +15,9 @@ force: true
     <v-dialog v-model="isEntryFormOpen" max-width="800px" persistent>
       <slot
         :closeForm="closeEntryForm"
-        :editIndex="editIndex"
         :editTarget="editTarget"
         :isEntryFormOpen="isEntryFormOpen"
+        :isNew="editIndex === NEW_INDEX"
         :removeForm="removeForm"
         :updatedForm="updatedForm"
         name="form"
@@ -34,6 +34,9 @@ import {cloneDeep} from 'lodash-es'
 
 @Component
 export default class StructArrayForm<T> extends mixins(Base) {
+  /** 新規追加を識別するためのINDEX */
+  readonly NEW_INDEX = -1
+
   /** 編集対象 */
   @PropSync('items', {type: Array})
   syncedItems!: T[]
