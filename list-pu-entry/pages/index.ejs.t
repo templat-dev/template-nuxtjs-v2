@@ -82,7 +82,6 @@ export default class <%= struct.name.pascalPluralName %> extends mixins(Base) {
       = {searchCondition: INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION, pageInfo: INITIAL_DATA_TABLE_PAGE_INFO}
   ): Promise<Model<%= struct.name.pascalPluralName %>> {
     return await new <%= struct.name.pascalName %>Api().search<%= struct.name.pascalName %>({
-    <%_ struct.fields.forEach(function(field, index){ -%>
       ...searchCondition,
       limit: pageInfo.itemsPerPage !== -1 ? pageInfo.itemsPerPage : undefined,
 <%_ if (project.dbType === 'datastore') { -%>
