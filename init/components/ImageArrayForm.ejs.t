@@ -37,9 +37,9 @@ force: true
 
 <script lang="ts">
 import {Component, Prop, PropSync, Vue} from 'nuxt-property-decorator'
-import {ImageApi} from '@/apis'
-import appUtils from '@/utils/appUtils'
-import {vxm} from '@/store'
+import {ImageApi} from '~/apis'
+import appUtils from '~/utils/appUtils'
+import {vxm} from '~/store'
 
 @Component
 export default class ImageArrayForm extends Vue {

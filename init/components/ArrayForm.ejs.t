@@ -30,8 +30,8 @@ force: true
 
 <script lang="ts">
 import {Component, mixins, Prop, PropSync} from 'nuxt-property-decorator'
-import {vxm} from '@/store'
-import Base from '@/mixins/base'
+import {vxm} from '~/store'
+import Base from '~/mixins/base'
 
 @Component
 export default class ArrayForm<T> extends mixins(Base) {

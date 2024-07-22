@@ -3,7 +3,7 @@ to: <%= rootDirectory %>/mixins/base.ts
 ---
 import {Component, Vue} from 'nuxt-property-decorator'
 import {format, formatISO} from 'date-fns'
-import appUtils from '@/utils/appUtils'
+import appUtils from '~/utils/appUtils'
 
 export interface VForm extends HTMLFormElement {
   reset(): void

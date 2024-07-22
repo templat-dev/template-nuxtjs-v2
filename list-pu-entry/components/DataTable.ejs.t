@@ -105,14 +105,14 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
 <script lang="ts">
 import {Component, Emit, mixins, Prop, PropSync} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
-import Base from '@/mixins/base'
-import {Model<%= struct.name.pascalName %>} from '@/apis'
-import AppDataTable, {DataTablePageInfo, INITIAL_DATA_TABLE_PAGE_INFO} from '@/components/common/AppDataTable.vue'
+import Base from '~/mixins/base'
+import {Model<%= struct.name.pascalName %>} from '~/apis'
+import AppDataTable, {DataTablePageInfo, INITIAL_DATA_TABLE_PAGE_INFO} from '~/components/common/AppDataTable.vue'
 <%_ if (struct.structType !== 'struct') { -%>
 import <%= struct.name.pascalName %>SearchForm, {
   <%= struct.name.pascalName %>SearchCondition,
   INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION
-} from '@/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
+} from '~/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
 <%_ } -%>
 
 <%_ if (struct.structType !== 'struct') { -%>

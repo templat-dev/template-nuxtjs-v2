@@ -53,11 +53,11 @@ force: true
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
 <%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
-import {firebaseAuth} from '@/plugins/firebase'
+import {firebaseAuth} from '~/plugins/firebase'
 <%_ } -%>
-import AppLoading from '@/components/modal/AppLoading.vue'
-import AppDialog from '@/components/modal/AppDialog.vue'
-import AppSnackBar from '@/components/modal/AppSnackBar.vue'
+import AppLoading from '~/components/modal/AppLoading.vue'
+import AppDialog from '~/components/modal/AppDialog.vue'
+import AppSnackBar from '~/components/modal/AppSnackBar.vue'
 
 @Component({
   components: {AppLoading, AppDialog, AppSnackBar}

@@ -10,7 +10,7 @@ force: true
 
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
-import {vxm} from '@/store'
+import {vxm} from '~/store'
 
 @Component
 export default class AppLoading extends Vue {

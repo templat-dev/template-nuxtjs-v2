@@ -29,8 +29,8 @@ force: true
 
 <script lang="ts">
 import {Component, Emit, mixins, Prop, PropSync} from 'nuxt-property-decorator'
-import Base from '@/mixins/base'
-import appUtils from '@/utils/appUtils'
+import Base from '~/mixins/base'
+import appUtils from '~/utils/appUtils'
 import {DataTableHeader} from 'vuetify'
 
 export interface DataTablePageInfo {

@@ -98,10 +98,10 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
 import {Component, Emit, mixins, Prop, PropSync, Watch} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
 import {Writable} from 'type-fest'
-import Base from '@/mixins/base'
-import {<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request} from '@/apis'
+import Base from '~/mixins/base'
+import {<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request} from '~/apis'
 <%_ if (struct.exists.search.time || struct.exists.search.arrayTime) { -%>
-import DateTimeForm from '@/components/form/DateTimeForm.vue'
+import DateTimeForm from '~/components/form/DateTimeForm.vue'
 <%_ } -%>
 
 export const INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request> = {

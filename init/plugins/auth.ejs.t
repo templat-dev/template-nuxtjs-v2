@@ -5,7 +5,7 @@ force: true
 import {Context} from '@nuxt/types'
 import globalAxios from 'axios'
 import {onAuthStateChanged} from 'firebase/auth'
-import {firebaseAuth} from '@/plugins/firebase'
+import {firebaseAuth} from '~/plugins/firebase'
 
 export default async ({route}: Context) => {
   await new Promise((resolve) => {
