@@ -103,17 +103,15 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
 </template>
 
 <script lang="ts">
-import {Component, Emit, mixins, Prop, PropSync} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
-import Base from '~/mixins/base'
-import {Model<%= struct.name.pascalName %>} from '~/apis'
+import {Component, Emit, mixins, Prop, PropSync} from 'nuxt-property-decorator'
+import {Writable} from 'type-fest'
+import {Model<%= struct.name.pascalName %>, <%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request} from '~/apis'
 import AppDataTable, {DataTablePageInfo, INITIAL_DATA_TABLE_PAGE_INFO} from '~/components/common/AppDataTable.vue'
 <%_ if (struct.structType !== 'struct') { -%>
-import <%= struct.name.pascalName %>SearchForm, {
-  <%= struct.name.pascalName %>SearchCondition,
-  INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION
-} from '~/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
+import <%= struct.name.pascalName %>SearchForm, {INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION} from '~/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
 <%_ } -%>
+import Base from '~/mixins/base'
 
 <%_ if (struct.structType !== 'struct') { -%>
 @Component({
@@ -171,7 +169,7 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
 
   /** 検索条件 */
   @PropSync('searchCondition', {type: Object, default: () => cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION)})
-  syncedSearchCondition!: <%= struct.name.pascalName %>SearchCondition
+  syncedSearchCondition!: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request>
 
   /** 表示方式 (true: 子要素として表示, false: 親要素として表示) */
   @Prop({type: Boolean, default: false})
@@ -196,7 +194,7 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
   @Emit('onChangeSearch')
   onChangeSearch() {}
 
-  search(searchCondition: <%= struct.name.pascalName %>SearchCondition) {
+  search(searchCondition: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request>) {
     this.syncedSearchCondition = searchCondition
     this.onChangeSearch()
   }
