@@ -10,11 +10,9 @@ force: true
   "private": true,
   "scripts": {
     "openapi": "openapi-generator-cli generate --generator-key default",
-    "dev": "nuxt --dotenv ./env/.env",
     "dev:dev": "nuxt --dotenv ./env/.env.dev",
     "dev:stg": "nuxt --dotenv ./env/.env.stg",
     "dev:prod": "nuxt --dotenv ./env/.env.prod",
-    "build": "nuxt build --dotenv ./env/.env",
     "build:dev": "nuxt build --dotenv ./env/.env.dev",
     "build:stg": "nuxt build --dotenv ./env/.env.stg",
     "build:prod": "nuxt build --dotenv ./env/.env.prod",
