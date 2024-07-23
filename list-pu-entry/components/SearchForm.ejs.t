@@ -95,38 +95,15 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
   <%_ } -%>
 <%_ }) -%>
 <%_ } -%>
-import {Component, Emit, mixins, Prop, PropSync, Watch} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
+import {Component, Emit, mixins, Prop, PropSync, Watch} from 'nuxt-property-decorator'
 import {Writable} from 'type-fest'
-import Base from '~/mixins/base'
 import {<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request} from '~/apis'
 <%_ if (struct.exists.search.time || struct.exists.search.arrayTime) { -%>
 import DateTimeForm from '~/components/form/DateTimeForm.vue'
 <%_ } -%>
-
-export const INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request> = {
-  <%_ searchConditions.forEach(function(searchCondition) { -%>
-    <%_ if (searchCondition.type === 'string' && !searchCondition.range) { -%>
-  <%= searchCondition.name %>: undefined,
-    <%_ } -%>
-    <%_ if (searchCondition.type === 'boolean' && !searchCondition.range) { -%>
-  <%= searchCondition.name %>: undefined,
-    <%_ } -%>
-    <%_ if (searchCondition.type === 'number' && !searchCondition.range) { -%>
-  <%= searchCondition.name %>: undefined,
-    <%_ } -%>
-    <%_ if (searchCondition.type === 'number' && searchCondition.range) { -%>
-  <%= searchCondition.name %>: undefined,
-  <%= searchCondition.name %>From: undefined,
-  <%= searchCondition.name %>To: undefined,
-    <%_ } -%>
-    <%_ if (searchCondition.type === 'string' && searchCondition.range) { -%>
-  <%= searchCondition.name %>: undefined,
-  <%= searchCondition.name %>From: undefined,
-  <%= searchCondition.name %>To: undefined,
-    <%_ } -%>
-  <%_ }) -%>
-}
+import {INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION} from '~/initials/<%= struct.name.pascalName %>Initials'
+import Base from '~/mixins/base'
 
 <%_ if (struct.exists.search.time || struct.exists.search.arrayTime) { -%>
 @Component({

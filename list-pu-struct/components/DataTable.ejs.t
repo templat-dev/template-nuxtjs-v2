@@ -109,7 +109,8 @@ import {Writable} from 'type-fest'
 import {Model<%= struct.name.pascalName %>, <%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request} from '~/apis'
 import AppDataTable, {DataTablePageInfo, INITIAL_DATA_TABLE_PAGE_INFO} from '~/components/common/AppDataTable.vue'
 <%_ if (struct.structType !== 'struct') { -%>
-import <%= struct.name.pascalName %>SearchForm, {INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION} from '~/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
+import <%= struct.name.pascalName %>SearchForm from '~/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
+import {INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION} from '~/initials/<%= struct.name.pascalName %>Initials'
 <%_ } -%>
 import Base from '~/mixins/base'
 
