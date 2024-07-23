@@ -40,6 +40,7 @@ import <%= struct.name.pascalName %>EntryForm from '~/components/<%= struct.name
 import {INITIAL_<%= struct.name.upperSnakeName %>, INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION} from '~/initials/<%= struct.name.pascalName %>Initials'
 import Base from '~/mixins/base'
 import {vxm} from '~/store'
+import AppUtils from '~/utils/appUtils'
 
 @Component({
   components: {
@@ -127,6 +128,8 @@ export default class <%= struct.name.pascalPluralName %> extends mixins(Base) {
 <%_ } -%>
       this.<%= struct.name.lowerCamelPluralName %> = data.<%= struct.name.lowerCamelPluralName %> || []
       this.totalCount = data.count || 0
+    } catch (e: any) {
+      AppUtils.showApiErrorDialog(e)
     } finally {
       this.isLoading = false
     }
@@ -153,6 +156,8 @@ export default class <%= struct.name.pascalPluralName %> extends mixins(Base) {
           await new <%= struct.name.pascalName %>Api().delete<%= struct.name.pascalName %>({id: <%= struct.name.lowerCamelName %>!.id!})
           this.isEntryFormOpen = false
           await this.reFetch()
+        } catch (e: any) {
+          AppUtils.showApiErrorDialog(e)
         } finally {
           vxm.app.hideLoading()
         }

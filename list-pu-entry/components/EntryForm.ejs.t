@@ -277,6 +277,7 @@ import {INITIAL_<%= field.structName.upperSnakeName %>} from '~/initials/<%= fie
 import {INITIAL_<%= struct.name.upperSnakeName %>} from '~/initials/<%= struct.name.pascalName %>Initials'
 import Base, {VForm} from '~/mixins/base'
 import {vxm} from '~/store'
+import AppUtils from '~/utils/appUtils'
 
 @Component({
   components: {
@@ -423,6 +424,8 @@ export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base)
       }
       this.close()
       this.saved()
+    } catch (e: any) {
+      AppUtils.showApiErrorDialog(e)
     } finally {
       vxm.app.hideLoading()
     }

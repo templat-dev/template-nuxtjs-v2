@@ -2,7 +2,9 @@
 to: <%= rootDirectory %>/utils/appUtils.ts
 force: true
 ---
+import {AxiosError} from 'axios'
 import format from 'date-fns/format'
+import {vxm} from '~/store'
 
 export default class AppUtils {
   static wait = (ms: number): Promise<void> => new Promise(r => setTimeout(r, ms))
@@ -16,6 +18,19 @@ export default class AppUtils {
       result += characters.charAt(Math.floor(Math.random() * charactersLength))
     }
     return result
+  }
+
+  static showApiErrorDialog = (error: Error): any => {
+    let message = '通信エラーが発生しました。\n再度実行してください。'
+    message = error.message ? `エラーが発生しました。\n${error.message}` : message
+    if (error instanceof AxiosError) {
+      message = error.response?.data?.error ? `エラーが発生しました。\n${error.response?.data?.error}` : message
+    }
+    vxm.app.showDialog({
+      title: 'エラー',
+      message
+    })
+    return Promise.reject(error)
   }
 
   static toStringArray(array: any[]): string {
