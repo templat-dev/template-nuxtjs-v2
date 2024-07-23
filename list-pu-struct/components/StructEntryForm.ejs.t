@@ -231,10 +231,8 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
 </template>
 
 <script lang="ts">
-import {Component, Emit, mixins, Prop, PropSync, <% if (struct.exists.edit.struct) { %>Vue, <% } %>Watch} from 'nuxt-property-decorator'
 import {cloneDeep} from 'lodash-es'
-import {vxm} from '~/store'
-import Base, {VForm} from '~/mixins/base'
+import {Component, Emit, mixins, Prop, PropSync, <% if (struct.exists.edit.struct) { %>Vue, <% } %>Watch} from 'nuxt-property-decorator'
 import {<%_ if (struct.structType !== 'struct') { -%><%= struct.name.pascalName %>Api, <% } -%>Model<%= struct.name.pascalName %>} from '~/apis'
 <%_ if (struct.exists.edit.time || struct.exists.edit.arrayTime) { -%>
 import DateTimeForm from '~/components/form/DateTimeForm.vue'
@@ -263,37 +261,22 @@ import <%= field.structName.pascalName %>DataTable from '~/components/<%= field.
       <%_ importStructTableSet.add(field.structName.pascalName) -%>
     <%_ } -%>
     <%_ if (!importStructFormSet.has(field.structName.pascalName)) { -%>
-import <%= field.structName.pascalName %>EntryForm, {INITIAL_<%= field.structName.upperSnakeName %>} from '~/components/<%= field.structName.lowerCamelName %>/<%= field.structName.pascalName %>EntryForm.vue'
+import <%= field.structName.pascalName %>EntryForm} from '~/components/<%= field.structName.lowerCamelName %>/<%= field.structName.pascalName %>EntryForm.vue'
+import {INITIAL_<%= field.structName.upperSnakeName %>} from '~/initials/<%= field.structName.pascalName %>Initials'
       <%_ importStructFormSet.add(field.structName.pascalName) -%>
     <%_ } -%>
   <%_ } -%>
   <%_ if (field.editType === 'struct') { -%>
     <%_ if (!importStructFormSet.has(field.structName.pascalName)) { -%>
-import <%= field.structName.pascalName %>EntryForm, {INITIAL_<%= field.structName.upperSnakeName %>} from '~/components/<%= field.structName.lowerCamelName %>/<%= field.structName.pascalName %>EntryForm.vue'
+import <%= field.structName.pascalName %>EntryForm} from '~/components/<%= field.structName.lowerCamelName %>/<%= field.structName.pascalName %>EntryForm.vue'
+import {INITIAL_<%= field.structName.upperSnakeName %>} from '~/initials/<%= field.structName.pascalName %>Initials'
       <%_ importStructFormSet.add(field.structName.pascalName) -%>
     <%_ } -%>
   <%_ } -%>
 <%_ }) -%>
-
-export const INITIAL_<%= struct.name.upperSnakeName %>: Model<%= struct.name.pascalName %> = {
-<%_ struct.fields.forEach(function (field, key) { -%>
-  <%_ if (field.editType === 'struct') { -%>
-  <%= field.name.lowerCamelName %>: INITIAL_<%= field.structName.upperSnakeName %>,
-  <%_ } -%>
-  <%_ if (field.editType.startsWith('array')) { -%>
-  <%= field.name.lowerCamelName %>: [],
-  <%_ } -%>
-  <%_ if (field.editType === 'string' || field.editType === 'textarea' || field.editType === 'time') { -%>
-  <%= field.name.lowerCamelName %>: undefined,
-  <%_ } -%>
-  <%_ if (field.editType === 'bool') { -%>
-  <%= field.name.lowerCamelName %>: undefined,
-  <%_ } -%>
-  <%_ if (field.editType === 'number') { -%>
-  <%= field.name.lowerCamelName %>: undefined,
-  <%_ } -%>
-<%_ }) -%>
-}
+import {INITIAL_<%= struct.name.upperSnakeName %>} from '~/initials/<%= struct.name.pascalName %>Initials'
+import Base, {VForm} from '~/mixins/base'
+import {vxm} from '~/store'
 
 @Component({
   components: {
