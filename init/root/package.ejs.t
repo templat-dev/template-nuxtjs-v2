@@ -17,7 +17,8 @@ force: true
     "build:stg": "nuxt build --dotenv ./env/.env.stg",
     "build:prod": "nuxt build --dotenv ./env/.env.prod",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "postinstall": "yarn run openapi"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
