@@ -19,15 +19,21 @@ import {INITIAL_<%= field.structName.upperSnakeName %>} from '~/initials/<%= fie
   <%_ } -%>
 <%_ }) -%>
 <%_ const searchConditions = [] -%>
-<%_ if (struct.fields && struct.fields.length > 0) { -%>
-<%_ struct.fields.forEach(function (field, key) { -%>
+<%_ if (struct.fields) { -%>
+<%_ struct.fields.forEach(function(field, index){ -%>
   <%_ if ((field.listType === 'string' || field.listType === 'array-string' || field.listType === 'time' || field.listType === 'array-time') && field.searchType === 1) { -%>
+    <%_ searchConditions.push({name: field.name.lowerCamelName, type: 'string', range: false}) -%>
+  <%_ } -%>
+  <%_ if (field.listType === 'relation' && field.dataType === 'string' && field.searchType === 1) { -%>
     <%_ searchConditions.push({name: field.name.lowerCamelName, type: 'string', range: false}) -%>
   <%_ } -%>
   <%_ if ((field.listType === 'bool' || field.listType === 'array-bool') && field.searchType === 1) { -%>
     <%_ searchConditions.push({name: field.name.lowerCamelName, type: 'boolean', range: false}) -%>
   <%_ } -%>
-  <%_ if ((field.listType === 'number' || field.listType === 'array-number') && field.searchType === 1) { -%>
+  <%_ if ((field.listType === 'number' || field.listType === 'array-number' || field.listType === 'segment') && field.searchType === 1) { -%>
+    <%_ searchConditions.push({name: field.name.lowerCamelName, type: 'number', range: false}) -%>
+  <%_ } -%>
+  <%_ if (field.listType === 'relation' && field.dataType === 'number' && field.searchType === 1) { -%>
     <%_ searchConditions.push({name: field.name.lowerCamelName, type: 'number', range: false}) -%>
   <%_ } -%>
   <%_ if ((field.listType === 'number' || field.listType === 'array-number') && 2 <= field.searchType &&  field.searchType <= 5) { -%>
@@ -71,13 +77,7 @@ export const INITIAL_<%= struct.name.upperSnakeName %>: Model<%= struct.name.pas
   <%_ if (field.editType.startsWith('array')) { -%>
   <%= field.name.lowerCamelName %>: [],
   <%_ } -%>
-  <%_ if (field.editType === 'string' || field.editType === 'textarea' || field.editType === 'time') { -%>
-  <%= field.name.lowerCamelName %>: undefined,
-  <%_ } -%>
-  <%_ if (field.editType === 'bool') { -%>
-  <%= field.name.lowerCamelName %>: undefined,
-  <%_ } -%>
-  <%_ if (field.editType === 'number') { -%>
+  <%_ if (field.editType === 'string' || field.editType === 'textarea' || field.editType === 'image' || field.editType === 'number' || field.editType === 'bool' || field.editType === 'time' || field.editType === 'segment' || field.editType === 'relation') { -%>
   <%= field.name.lowerCamelName %>: undefined,
   <%_ } -%>
 <%_ }) -%>
