@@ -1,7 +1,6 @@
 ---
 to: <%= rootDirectory %>/initials/<%= struct.name.pascalName %>Initials.ts
 ---
-import {Writable} from 'type-fest'
 import {Model<%= struct.name.pascalName %>} from '~/apis'
 <%_ const importInitialsSet = new Set() -%>
 <%_ struct.fields.forEach(function (field, key) { -%>
