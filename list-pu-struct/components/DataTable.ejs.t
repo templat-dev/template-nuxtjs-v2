@@ -131,25 +131,27 @@ import Base from '~/mixins/base'
 <%_ } -%>
 export default class <%= struct.name.pascalName %>DataTable extends mixins(Base) {
   /** ヘッダー定義 */
-  headers = [
-    <%_ if (struct.fields) { -%>
-    <%_ struct.fields.forEach(function(field, index){ -%>
-      <%_ if (field.listType !== 'none' && field.dataType !== 'struct' && field.dataType !== 'array-struct') { -%>
-    {
-      text: '<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName === 'id' ? 'ID' : field.name.lowerCamelName %>',
-      align: '',
-      value: '<%= field.name.lowerCamelName %>'
-    },
-    <%_ } -%>
-    <%_ }); -%>
-    <%_ } -%>
-    {
-      text: '',
-      align: 'center',
-      value: 'action',
-      sortable: false
-    }
-  ]
+  get headers() {
+    return [
+      <%_ if (struct.fields) { -%>
+      <%_ struct.fields.forEach(function(field, index){ -%>
+        <%_ if (field.listType !== 'none' && field.dataType !== 'struct' && field.dataType !== 'array-struct') { -%>
+      {
+        text: '<%= field.screenLabel ? field.screenLabel : field.name.lowerCamelName === 'id' ? 'ID' : field.name.lowerCamelName %>',
+        align: '',
+        value: '<%= field.name.lowerCamelName %>'
+      },
+      <%_ } -%>
+      <%_ }); -%>
+      <%_ } -%>
+      {
+        text: '',
+        align: 'center',
+        value: 'action',
+        sortable: false
+      }
+    ]
+  }
 
   /** 一覧表示用の配列 */
   @Prop({type: Array})
