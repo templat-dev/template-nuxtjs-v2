@@ -2,7 +2,7 @@
 to: <%= rootDirectory %>/app_stg.yaml
 force: true
 ---
-runtime: nodejs14
+runtime: nodejs20
 
 instance_class: F2
 
