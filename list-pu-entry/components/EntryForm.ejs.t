@@ -180,7 +180,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
                     :has-parent="true"
                     :items="items"
                     @clickRow="openEntryForm"
-                    @clickAdd="openEntryForm"
+                    @clickAdd="() => openEntryForm()"
                     @remove="removeRow"
                   ></<%= field.structName.pascalName %>DataTable>
                 </template>
