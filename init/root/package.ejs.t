@@ -9,7 +9,7 @@ force: true
   "author": "TemPlat Console",
   "private": true,
   "scripts": {
-    "openapi": "openapi-generator-cli generate --generator-key default",
+    "openapi": "npx -y @openapitools/openapi-generator-cli@^2.13.4 generate --generator-key default",
     "dev:dev": "nuxt --dotenv ./env/.env.dev",
     "dev:stg": "nuxt --dotenv ./env/.env.stg",
     "dev:prod": "nuxt --dotenv ./env/.env.prod",
