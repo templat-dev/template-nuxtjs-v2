@@ -221,11 +221,11 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
       </v-layout>
     </v-card-text>
     <v-card-actions v-if="!isEmbedded">
-      <v-btn color="grey darken-1" text @click="close">キャンセル</v-btn>
+      <v-btn color="grey darken-1" text @click="() => close()">キャンセル</v-btn>
       <v-spacer></v-spacer>
-      <v-btn v-if="!isNew" color="red darken-1" text @click="remove">削除</v-btn>
+      <v-btn v-if="!isNew" color="red darken-1" text @click="() => remove()">削除</v-btn>
       <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="save">保存</v-btn>
+      <v-btn color="blue darken-1" text @click="() => save()">保存</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -277,6 +277,7 @@ import {INITIAL_<%= field.structName.upperSnakeName %>} from '~/initials/<%= fie
 import {INITIAL_<%= struct.name.upperSnakeName %>} from '~/initials/<%= struct.name.pascalName %>Initials'
 import Base, {VForm} from '~/mixins/base'
 import {vxm} from '~/store'
+import AppUtils from '~/utils/appUtils'
 
 @Component({
   components: {
@@ -423,6 +424,8 @@ export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base)
       }
       this.close()
       this.saved()
+    } catch (e: any) {
+      AppUtils.showApiErrorDialog(e)
     } finally {
       vxm.app.hideLoading()
     }
@@ -436,7 +439,7 @@ export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base)
   saved() {}
 
   @Emit('remove')
-  async remove() {}
+  remove() {}
 
   @Emit('close')
   close() {

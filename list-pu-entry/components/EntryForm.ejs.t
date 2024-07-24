@@ -221,11 +221,11 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
       </v-layout>
     </v-card-text>
     <v-card-actions v-if="!isEmbedded">
-      <v-btn color="grey darken-1" text @click="close">キャンセル</v-btn>
+      <v-btn color="grey darken-1" text @click="() => close()">キャンセル</v-btn>
       <v-spacer></v-spacer>
-      <v-btn v-if="!isNew" color="red darken-1" text @click="remove">削除</v-btn>
+      <v-btn v-if="!isNew" color="red darken-1" text @click="() => remove()">削除</v-btn>
       <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="save">保存</v-btn>
+      <v-btn color="blue darken-1" text @click="() => save()">保存</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -439,7 +439,7 @@ export default class <%= struct.name.pascalName %>EntryForm extends mixins(Base)
   saved() {}
 
   @Emit('remove')
-  async remove() {}
+  remove() {}
 
   @Emit('close')
   close() {
