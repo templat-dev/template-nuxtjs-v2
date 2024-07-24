@@ -68,7 +68,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
         <v-spacer></v-spacer>
         <v-btn color="red darken-1" text @click="clear">クリア</v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="search">検索</v-btn>
+        <v-btn color="blue darken-1" text @click="search(searchCondition)">検索</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -117,9 +117,18 @@ export default class <%= struct.name.pascalName %>SearchForm extends mixins(Base
     }
   }
 
+  @Watch('searchCondition', {deep: true})
+  removeNotViewable() {
+    for (const [key, value] of Object.entries(this.searchCondition)) {
+      if (value === '' || value === false) {
+        (this.searchCondition as any)[key] = undefined
+      }
+    }
+  }
+
   clear() {
     this.searchCondition = cloneDeep(INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION)
-    this.search()
+    this.search(this.searchCondition)
   }
 
   close() {
@@ -127,9 +136,8 @@ export default class <%= struct.name.pascalName %>SearchForm extends mixins(Base
   }
 
   @Emit('search')
-  search() {
+  search(searchCondition: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request>) {
     this.close()
-    return this.searchCondition
   }
 }
 </script>
