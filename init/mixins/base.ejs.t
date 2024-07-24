@@ -1,8 +1,8 @@
 ---
 to: <%= rootDirectory %>/mixins/base.ts
 ---
+import dayjs from 'dayjs'
 import {Component, Vue} from 'nuxt-property-decorator'
-import {format, formatISO} from 'date-fns'
 import appUtils from '~/utils/appUtils'
 
 export interface VForm extends HTMLFormElement {
@@ -15,15 +15,15 @@ export interface VForm extends HTMLFormElement {
 
 @Component
 export default class Base extends Vue {
-  formatISO(date: Date) {
-    return formatISO(date)
+  formatISO(date?: string) {
+    return dayjs(date).format()
   }
 
   formatDate(date?: string) {
     if (!date) {
       return ''
     }
-    return format(new Date(date), 'yyyy-MM-dd HH:mm')
+    return dayjs(date).format('YYYY-MM-DD HH:mm')
   }
 
   toStringArray(array: any[]) {

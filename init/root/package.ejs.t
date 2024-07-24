@@ -22,7 +22,7 @@ force: true
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
-    "date-fns": "^2.30.0",
+    "dayjs": "^1.11.12",
 <%_ if (project.plugins.find(p => p.name === 'auth')?.enable) { -%>
     "firebase": "^10.3.0",
     "firebaseui": "^6.1.0",

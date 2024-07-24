@@ -3,10 +3,12 @@ to: <%= rootDirectory %>/utils/appUtils.ts
 force: true
 ---
 import {AxiosError} from 'axios'
-import format from 'date-fns/format'
+import dayjs from 'dayjs'
 import {vxm} from '~/store'
 
 export default class AppUtils {
+  static readonly DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm'
+
   static wait = (ms: number): Promise<void> => new Promise(r => setTimeout(r, ms))
 
   static generateRandomString(length: number) {
@@ -51,8 +53,7 @@ export default class AppUtils {
     if (!array) return ''
     let result = '['
     for (let idx = 0; idx < array.length; idx++) {
-      const jstDate = new Date(array[idx])
-      const formatted = (format(jstDate, 'yyyy-MM-dd HH:mm'))
+      const formatted = dayjs(array[idx]).format(this.DATE_TIME_FORMAT)
       if (idx !== 0) {
         result = `${result},`
       }

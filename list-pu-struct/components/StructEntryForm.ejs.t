@@ -156,7 +156,7 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
               <%_ if (field.childType === 'time') { -%>
               <array-form
                 v-slot="{editTarget, updatedForm}"
-                :initial="formatISO(new Date())"
+                :initial="formatISO()"
                 :items.sync="syncedTarget.<%= field.name.lowerCamelName %>">
                 <date-time-form
                   :date-time.sync="editTarget"
