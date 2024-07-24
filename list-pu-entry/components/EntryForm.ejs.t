@@ -179,7 +179,8 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
                   <<%= field.structName.pascalName %>DataTable
                     :has-parent="true"
                     :items="items"
-                    @openEntryForm="openEntryForm"
+                    @clickRow="openEntryForm"
+                    @clickAdd="openEntryForm"
                     @remove="removeRow"
                   ></<%= field.structName.pascalName %>DataTable>
                 </template>
