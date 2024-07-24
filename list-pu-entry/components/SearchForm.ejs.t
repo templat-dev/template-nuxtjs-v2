@@ -120,7 +120,7 @@ export default class <%= struct.name.pascalName %>SearchForm extends mixins(Base
   @Watch('searchCondition', {deep: true})
   removeNotViewable() {
     for (const [key, value] of Object.entries(this.searchCondition)) {
-      if (value === '' || value === false) {
+      if ((typeof value === 'boolean' || typeof value === 'string') && !value) {
         (this.searchCondition as any)[key] = undefined
       }
     }
