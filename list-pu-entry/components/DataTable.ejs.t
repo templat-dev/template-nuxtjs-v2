@@ -105,8 +105,8 @@ to: <%= rootDirectory %>/components/<%= struct.name.lowerCamelName %>/<%= struct
 <script lang="ts">
 import {cloneDeep} from 'lodash-es'
 import {Component, Emit, mixins, Prop, PropSync} from 'nuxt-property-decorator'
-import {Writable} from 'type-fest'
 <%_ if (struct.structType !== 'struct') { -%>
+import {Writable} from 'type-fest'
 import {Model<%= struct.name.pascalName %>, <%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request} from '~/apis'
 import AppDataTable, {DataTablePageInfo, INITIAL_DATA_TABLE_PAGE_INFO} from '~/components/common/AppDataTable.vue'
 import <%= struct.name.pascalName %>SearchForm from '~/components/<%= struct.name.lowerCamelName %>/<%= struct.name.pascalName %>SearchForm.vue'
@@ -182,7 +182,7 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
   get previewSearchCondition() {
     const previewSearchConditions = []
     for (const [key, value] of Object.entries(this.syncedSearchCondition)) {
-      if (!value) {
+      if (value === undefined) {
         continue
       }
       previewSearchConditions.push(`${key}=${value}`)
@@ -205,13 +205,13 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
 <%_ } -%>
 
   @Emit('clickRow')
-  clickRow(item?: Model<%= struct.name.pascalName %>) {}
+  clickRow(item: Model<%= struct.name.pascalName %>) {}
 
   @Emit('clickAdd')
   clickAdd() {}
 
   @Emit('remove')
-  remove() {}
+  remove(item: Model<%= struct.name.pascalName %>) {}
 }
 </script>
 

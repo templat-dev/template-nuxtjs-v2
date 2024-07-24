@@ -182,7 +182,7 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
   get previewSearchCondition() {
     const previewSearchConditions = []
     for (const [key, value] of Object.entries(this.syncedSearchCondition)) {
-      if (!value) {
+      if (value === undefined) {
         continue
       }
       previewSearchConditions.push(`${key}=${value}`)
@@ -205,13 +205,13 @@ export default class <%= struct.name.pascalName %>DataTable extends mixins(Base)
 <%_ } -%>
 
   @Emit('clickRow')
-  clickRow(item?: Model<%= struct.name.pascalName %>) {}
+  clickRow(item: Model<%= struct.name.pascalName %>) {}
 
   @Emit('clickAdd')
   clickAdd() {}
 
   @Emit('remove')
-  remove() {}
+  remove(item: Model<%= struct.name.pascalName %>) {}
 }
 </script>
 
