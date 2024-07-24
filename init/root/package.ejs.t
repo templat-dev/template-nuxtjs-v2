@@ -28,18 +28,18 @@ force: true
     "firebaseui": "^6.1.0",
 <%_ } -%>
     "lodash-es": "^4.17.21",
-    "nuxt": "^2.17.1",
+    "nuxt": "^2.18.1",
     "nuxt-property-decorator": "^2.9.1",
-    "type-fest": "^4.22.1",
-    "vue": "^2.7.14",
+    "type-fest": "^4.23.0",
+    "vue": "^2.7.16",
     "vuex-class-component": "^2.3.6"
   },
   "devDependencies": {
-    "@nuxt/types": "^2.15.8",
+    "@nuxt/types": "^2.18.1",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/vuetify": "^1.12.3",
     "@openapitools/openapi-generator-cli": "^2.13.4",
-    "@types/lodash-es": "^4.17.8"
+    "@types/lodash-es": "^4.17.12"
   },
   "resolutions": {
     "//": "https://stackoverflow.com/questions/67631879/nuxtjs-vuetify-throwing-lots-of-using-for-division-is-deprecated-and-will-be",
