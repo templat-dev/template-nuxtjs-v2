@@ -10,11 +10,10 @@ to: "<%= struct.generateEnable ? `${rootDirectory}/pages/${project.buildConfig.w
       :search-condition.sync="searchCondition"
       :total-count="totalCount"
       class="elevation-1"
-      @clickAdd="openEntryForm"
+      @clickAdd="() => openEntryForm()"
       @clickRow="openEntryForm"
       @onChangePageInfo="reFetch"
       @onChangeSearch="reFetch"
-      @openEntryForm="openEntryForm"
       @remove="remove"
     ></<%= struct.name.pascalName %>DataTable>
     <v-dialog v-model="isEntryFormOpen" max-width="800px" persistent>
