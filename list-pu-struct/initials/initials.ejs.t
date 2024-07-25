@@ -26,7 +26,7 @@ export const INITIAL_<%= struct.name.upperSnakeName %>: Model<%= struct.name.pas
   <%_ if (field.editType.startsWith('array')) { -%>
   <%= field.name.lowerCamelName %>: [],
   <%_ } -%>
-  <%_ if (field.validateTags && field.validateTags.contains('required')) { -%>
+  <%_ if (field.validateTags && field.validateTags.includes('required')) { -%>
     <%_ if (field.editType === 'string' || field.editType === 'textarea' || field.editType === 'image' || field.editType === 'time' || field.editType === 'relation') { -%>
   <%= field.name.lowerCamelName %>: "",
     <%_ } else if (field.editType === 'number' || field.editType === 'segment') { -%>
