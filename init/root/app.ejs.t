@@ -6,7 +6,7 @@ runtime: nodejs20
 
 instance_class: F2
 
-<%_ if (applicationType === 'console' && branchName === 'master') { -%>
+<%_ if (applicationType === 'console') { -%>
 service: console
 <%_ } -%>
 
