@@ -48,23 +48,23 @@ import {INITIAL_<%= field.structName.upperSnakeName %>} from '~/initials/<%= fie
 export const INITIAL_<%= struct.name.upperSnakeName %>_SEARCH_CONDITION: Writable<<%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request> = {
   <%_ searchConditions.forEach(function(searchCondition) { -%>
     <%_ if (searchCondition.type === 'string' && !searchCondition.range) { -%>
-  <%= searchCondition.name %>: <%_ if (searchCondition.required) { -%>''<%_ } else { -%>undefined<%_ } -%>,
+  <%= searchCondition.name %>: <% if (searchCondition.required) { -%>''<%_ } else { -%>undefined<%_ } -%>,
     <%_ } -%>
     <%_ if (searchCondition.type === 'boolean' && !searchCondition.range) { -%>
-  <%= searchCondition.name %>: <%_ if (searchCondition.required) { -%>false<%_ } else { -%>undefined<%_ } -%>,
+  <%= searchCondition.name %>: <% if (searchCondition.required) { -%>false<%_ } else { -%>undefined<%_ } -%>,
     <%_ } -%>
     <%_ if (searchCondition.type === 'number' && !searchCondition.range) { -%>
-  <%= searchCondition.name %>: <%_ if (searchCondition.required) { -%>0<%_ } else { -%>undefined<%_ } -%>,
+  <%= searchCondition.name %>: <% if (searchCondition.required) { -%>0<%_ } else { -%>undefined<%_ } -%>,
     <%_ } -%>
     <%_ if (searchCondition.type === 'number' && searchCondition.range) { -%>
-  <%= searchCondition.name %>: <%_ if (searchCondition.required) { -%>0<%_ } else { -%>undefined<%_ } -%>,
-  <%= searchCondition.name %>From: <%_ if (searchCondition.required) { -%>0<%_ } else { -%>undefined<%_ } -%>,
-  <%= searchCondition.name %>To: <%_ if (searchCondition.required) { -%>0<%_ } else { -%>undefined<%_ } -%>,
+  <%= searchCondition.name %>: <% if (searchCondition.required) { -%>0<%_ } else { -%>undefined<%_ } -%>,
+  <%= searchCondition.name %>From: <% if (searchCondition.required) { -%>0<%_ } else { -%>undefined<%_ } -%>,
+  <%= searchCondition.name %>To: <% if (searchCondition.required) { -%>0<%_ } else { -%>undefined<%_ } -%>,
     <%_ } -%>
     <%_ if (searchCondition.type === 'string' && searchCondition.range) { -%>
-  <%= searchCondition.name %>: <%_ if (searchCondition.required) { -%>''<%_ } else { -%>undefined<%_ } -%>,
-  <%= searchCondition.name %>From: <%_ if (searchCondition.required) { -%>''<%_ } else { -%>undefined<%_ } -%>,
-  <%= searchCondition.name %>To: <%_ if (searchCondition.required) { -%>''<%_ } else { -%>undefined<%_ } -%>,
+  <%= searchCondition.name %>: <% if (searchCondition.required) { -%>''<%_ } else { -%>undefined<%_ } -%>,
+  <%= searchCondition.name %>From: <% if (searchCondition.required) { -%>''<%_ } else { -%>undefined<%_ } -%>,
+  <%= searchCondition.name %>To: <% if (searchCondition.required) { -%>''<%_ } else { -%>undefined<%_ } -%>,
     <%_ } -%>
   <%_ }) -%>
 }
