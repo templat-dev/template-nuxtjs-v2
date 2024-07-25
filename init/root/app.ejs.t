@@ -3,12 +3,11 @@ to: <%= rootDirectory %>/app.yaml
 force: true
 ---
 runtime: nodejs20
-
-instance_class: F2
-
 <%_ if (applicationType === 'console') { -%>
 service: console
 <%_ } -%>
+
+instance_class: F2
 
 handlers:
   - url: /_nuxt

@@ -3,15 +3,13 @@ to: <%= rootDirectory %>/app_stg.yaml
 force: true
 ---
 runtime: nodejs20
-
-instance_class: F2
-
-<%_ if (applicationType === 'web' && branchName === 'stg') { -%>
+<%_ if (applicationType === 'console') { -%>
+service: console-stg
+<%_ } else { -%>
 service: stg
 <%_ } -%>
-<%_ if (applicationType === 'console' && branchName === 'stg') { -%>
-service: console-stg
-<%_ } -%>
+
+instance_class: F2
 
 handlers:
   - url: /_nuxt
