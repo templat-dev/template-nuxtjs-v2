@@ -5,12 +5,6 @@ import {Writable} from 'type-fest'
 import {Model<%= struct.name.pascalName %>, <%= struct.name.pascalName %>ApiSearch<%= struct.name.pascalName %>Request} from '~/apis'
 <%_ const importInitialsSet = new Set() -%>
 <%_ struct.fields.forEach(function (field, key) { -%>
-  <%_ if (field.editType === 'array-struct') { -%>
-    <%_ if (!importInitialsSet.has(field.structName.pascalName)) { -%>
-import {INITIAL_<%= field.structName.upperSnakeName %>} from '~/initials/<%= field.structName.pascalName %>Initials'
-      <%_ importInitialsSet.add(field.structName.pascalName) -%>
-    <%_ } -%>
-  <%_ } -%>
   <%_ if (field.editType === 'struct') { -%>
     <%_ if (!importInitialsSet.has(field.structName.pascalName)) { -%>
 import {INITIAL_<%= field.structName.upperSnakeName %>} from '~/initials/<%= field.structName.pascalName %>Initials'
